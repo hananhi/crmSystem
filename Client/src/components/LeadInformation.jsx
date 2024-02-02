@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Header from './Header';
@@ -6,73 +6,101 @@ import { useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
 
-
 export default function LeadInformation() {
-   
+
   const [addPackage, setAddPackage] = useState(false);
   const [addActivityLog, setAddActivityLog] = useState(false);
   const [packages, setPackages] = useState([])
   const [activityLogs, setActivityLogs] = useState([]);
   const [Data, setData] = useState({});
+  const { state } = useLocation();
+  const [editingId, setEditingId] = useState(null);
+  const [editedName, setEditedName] = useState('');
+  const [editedDescription, setEditedDescription] = useState('');
+  const [editedPrice, setEditedPrice] = useState('');
 
-
-  const { state } = useLocation ();
- 
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    handleRowClick(state.leadId);
-   }, [state.leadId]);
+    // Define handleRowClick inside useEffect
    
-   useEffect(() => {
-    console.log('use', Data);
+    const handleRowClick = async (leadId) => {
+      setIsLoading(true); // Assume you have a state to track loading
+      try {
+        // Fetch lead details
+        const leadResponse = await fetch(`http://localhost:4000/leads/${leadId}`);
+        const leadData = await leadResponse.json();
+        console.log('Lead data:', leadData);
+  
+   
+        // Fetch associated packages
+        const packagesResponse = await fetch(`http://localhost:4000/leads/${leadId}/packages`);
+        const packagesData = await packagesResponse.json();
+        console.log('Associated Packages:', packagesData);
+  
+        // Fetch associated action logs
+        const actionLogsResponse = await fetch(`http://localhost:4000/leads/${leadId}/actionlogs`);
+        const actionLogsData = await actionLogsResponse.json();
+        console.log('Associated Action Logs:', actionLogsData);
+  
+        // Update state with fetched data
+        setData(leadData);
+        setPackages(packagesData);
+        setActivityLogs(actionLogsData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false); // Update loading state
+      }
+    };
+  
+    // Check if state.leadId is available then call handleRowClick
+    if (state.leadId) {
+      handleRowClick(state.leadId);
+    }
+  }, [state.leadId]); // Dependency array includes state.leadId
+  
 
-  }, [Data]);
+/*
 
   const handleRowClick = async (leadId) => {
     try {
-    
+
       // Fetch lead details
-      
+
       const leadResponse = await fetch(`http://localhost:4000/leads/${leadId}`);
       const leadData = await leadResponse.json();
-  
-      console.log('im here',leadData);
-     
-      
-     
+      console.log('im here', leadData);
+
       // Fetch associated packages
       const packagesResponse = await fetch(`http://localhost:4000/leads/${leadId}/packages`);
       const packagesData = await packagesResponse.json();
-
-    
       console.log('Associated Packages:', packagesData);
 
       // Fetch associated action logs
       const actionLogsResponse = await fetch(`http://localhost:4000/leads/${leadId}/actionlogs`);
       const actionLogsData = await actionLogsResponse.json();
+
+      console.log('lead',leadData)
   
-      console.log(leadData)
-      setData(leadData)
-      console.log('Lead Data:', Data);
-      
+  
+
       setPackages(packagesData);
       setActivityLogs(actionLogsData);
-        // Display or handle the retrieved data as needed
-      
+      // Display or handle the retrieved data as needed
       console.log('Associated Action Logs:', actionLogsData);
-    
-    
-  
+
+      setData(leadData);
       // You can now use the data to update the UI or display it in a modal, for example.
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
+  console.log('hi',Data);
+  */
+//delete function for the selected package
+  async function deletePackage(id) {
 
-  async function deletePackage(id){
-
-    
     try {
       const response = await fetch(`http://localhost:4000/leads/${state.leadId}/packages/${id}`, {
         method: 'DELETE',
@@ -80,7 +108,7 @@ export default function LeadInformation() {
           'Content-Type': 'application/json',
         },
       });
-  
+
       if (response.ok) {
         // Assuming you want to update the packages state after deletion
         setPackages((prevPackages) => prevPackages.filter(item => item.id !== id));
@@ -94,8 +122,8 @@ export default function LeadInformation() {
 
   }
 
-
-  async function deleteAction(id){
+//delete function for the selected action
+  async function deleteAction(id) {
     try {
       const response = await fetch(`http://localhost:4000/leads/${state.leadId}/actionlogs/${id}`, {
         method: 'DELETE',
@@ -103,7 +131,7 @@ export default function LeadInformation() {
           'Content-Type': 'application/json',
         },
       });
-  
+
       if (response.ok) {
         // Assuming you want to update the packages state after deletion
         setPackages((prevPackages) => prevPackages.filter(item => item.id !== id));
@@ -116,11 +144,11 @@ export default function LeadInformation() {
       console.error('Error deleting package', error);
     }
   }
-  
 
+//function to handle the inpush change which is in the package or in the actions 
   const handleInputChange = (e, type) => {
     const { name, value } = e.target;
-  
+
     if (type === 'package') {
       setNewPackage((prevPackage) => ({
         ...prevPackage,
@@ -134,11 +162,11 @@ export default function LeadInformation() {
     }
   };
 
-  const handleAddPackage =async () => {
+  const handleAddPackage = async () => {
 
     try {
-      // Perform any client-side validation if needed
-      
+  
+
       // Make a POST request to the server to add the package
       const response = await fetch(`http://localhost:4000/leads/${state.leadId}/packages`, {
         method: 'POST',
@@ -155,7 +183,7 @@ export default function LeadInformation() {
         // Update the client-side state with the added package
         setPackages([...packages, addedPackage]);
 
-        // Optionally, you can reset the form or clear the newPackage state
+        
         setNewPackage({
           id: uuidv4(),
           name: '',
@@ -163,7 +191,6 @@ export default function LeadInformation() {
           price: '',
         });
 
-        // Optionally, you can close the form or modal
         setAddPackage(false);
 
         console.log('Package added successfully:', addedPackage);
@@ -173,15 +200,15 @@ export default function LeadInformation() {
     } catch (error) {
       console.error('Error adding package', error);
     }
-  
-  };
+   };
 
-  const handleAddActivityLog = async() => {
-    
+   //add action log function 
+  const handleAddActivityLog = async () => {
+
     try {
-    
-      
-      // Make a POST request to the server to add the package
+
+
+      // Make a POST request to the server to add the action 
       const response = await fetch(`http://localhost:4000/leads/${state.leadId}/actionlogs`, {
         method: 'POST',
         headers: {
@@ -191,35 +218,34 @@ export default function LeadInformation() {
       });
 
       if (response.ok) {
-        // Assuming the server responds with the added package
+        // Assuming the server responds with the added action
         const addedlog = await response.json();
 
-        // Update the client-side state with the added package
+        // Update the client-side state with the added action
         setActivityLogs([...activityLogs, addedlog]);
 
-        // Optionally, you can reset the form or clear the newPackage state
+        // reset the form or clear the newAction state
         setNewActivityLog({
           id: uuidv4(),
-         date: '',
+          date: '',
           notes: '',
         });
 
-        // Optionally, you can close the form or modal
         setAddActivityLog(false);
 
-        console.log('Package added successfully:', addedlog);
+        console.log(' added successfully:', addedlog);
         window.location.reload()
       } else {
         console.error('Failed to add  data.');
       }
-    
+
     } catch (error) {
       console.error('Error adding ', error);
     }
-  
-    
+
   };
 
+  //define new package and action when the user want to add package or action
   const [newPackage, setNewPackage] = useState({
     id: uuidv4(),
     name: '',
@@ -233,13 +259,9 @@ export default function LeadInformation() {
   });
 
 
-  console.log('im also',Data);
 
-  const [editingId, setEditingId] = useState(null);
-  const [editedName, setEditedName] = useState('');
-  const [editedDescription, setEditedDescription] = useState('');
-  const [editedPrice, setEditedPrice] = useState('');
 
+  //when the user put edit botton 
   const handleEditClick = (id, name, description, price) => {
     setEditingId(id);
     setEditedName(name);
@@ -247,7 +269,7 @@ export default function LeadInformation() {
     setEditedPrice(price);
   };
 
-  const handleSaveClick =async () => {
+  const handleSaveClick = async () => {
     try {
       // Make an API call to update the data on the server
       const response = await fetch(`http://localhost:4000/leads/${state.leadId}/packages/${editingId}`, {
@@ -261,7 +283,7 @@ export default function LeadInformation() {
           price: editedPrice,
         }),
       });
-  
+
       if (response.ok) {
         // Update the local state or trigger a data refetch
         // Reset the editing state
@@ -270,12 +292,12 @@ export default function LeadInformation() {
         setEditedDescription('');
         setEditedPrice('');
 
-  window.location.reload();
+        window.location.reload();
         console.log('Changes saved successfully!');
       } else {
         console.error('Failed to save changes.');
       }
-    
+
     } catch (error) {
       console.error('Error saving changes:', error);
     }
@@ -289,7 +311,7 @@ export default function LeadInformation() {
   });
   const [editedDate, setEditedDate] = useState(''); // State for edited date
   const [editedNotes, setEditedNotes] = useState('');
-  
+
   // Function to handle clicking the "Edit" icon
   const handleEditClickAction = (logId, date, notes) => {
     setEditingLogId(logId); // Set the editing flag
@@ -299,7 +321,7 @@ export default function LeadInformation() {
       notes: notes,
     }); // Populate editedLog with the log to be edited
   };
-  
+
   // Function to handle saving changes in the edit form
   const handleSaveEdit = async () => {
     try {
@@ -311,7 +333,7 @@ export default function LeadInformation() {
         },
         body: JSON.stringify(editedLog),
       });
-  
+
       if (response.ok) {
         // Update the local state or trigger a data refetch
         // Reset the editing state
@@ -330,37 +352,46 @@ export default function LeadInformation() {
     }
   };
 
-  
+
   return (
     <div>
       <Header />
-      
 
-      <div className='flex justify-between mt-6 ml-6 '>
-        <div className='w-[50%] text-[#3fa277] font-bold text-2xl'>
+      {Data ? (
+  <div>
 
-          <div>{Data.name}</div>
-          <div> {Data.id}</div>
-          
+    
+    {/* Display other details as needed */}
+
+    <div className='flex justify-between mt-6 ml-6'>
+      <div className='w-[50%] text-[#3fa277] font-bold text-2xl'>
+        <div>Opportunity Name </div> {/* Repeated Opportunity Name? Consider removing if unnecessary */}
+      </div>
+
+      <div className='flex justify-evenly w-[30%] text-[#3fa277] text-center'>
+        <div className='border-r-2 p-3'>
+          <div>Creation Date</div>
+          {/* Format the creation date */}
+          {/*<div>{new Date(Data[0].creation_date).toLocaleDateString()}</div>*/}
         </div>
 
-        <div className='flex justify-evenly w-[30%] text-[#3fa277] text-center'>
-          <div className='border-r-2 p-3 '>
-            <div>Creation date</div>
-            <div>{Data.creation_date}</div>
-          </div>
+        <div className='border-r-2 p-3'>
+          <div>Last Modified</div>
+          {/* Format the last modified date */}
+        {/*  <div>{new Date(Data[0].last_modified).toLocaleDateString()}</div>*/}
+        </div>
 
-          <div className='border-r-2 p-3 '>
-            <div>Last modified</div>
-            <div>{Data.last_modified}</div>
-          </div>
-
-          <div className=' p-3'>
-            <div>Status</div>
-            <div>New</div>
-          </div>
+        <div className='p-3'>
+          <div>Status</div>
+          <div>New</div>
         </div>
       </div>
+    </div>
+  </div>
+) : (
+  <p>Loading lead details...</p>
+)}
+
 
       <div className='flex flex-col space-y-20 m-10 '>
         <div>
@@ -373,58 +404,58 @@ export default function LeadInformation() {
                 <th class="w-1/4 p-2 border">Package Name</th>
                 <th class="w-1/4 p-2 border">Description</th>
                 <th class="w-1/4 p-2 border">Price</th>
-                
+
               </tr>
             </thead>
             <tbody>
-            {packages.map((packageItem) => (
-              <tr key={packageItem.id}>
-                <td className="border border-slate-400">{packageItem.id}</td>
-                <td className="w-1/4 p-2 border">
-                  {editingId === packageItem.id ? (
-                    <input
-                      type="text"
-                      value={editedName}
-                      onChange={(e) => setEditedName(e.target.value)}
-                    />
-                  ) : (
-                    packageItem.name
-                  )}
-                </td>
-                <td className="w-1/4 p-2 border">
-                  {editingId === packageItem.id ? (
-                    <textarea
-                      value={editedDescription}
-                      onChange={(e) => setEditedDescription(e.target.value)}
-                    />
-                  ) : (
-                    packageItem.description
-                  )}
-                </td>
-                <td className="w-1/4 p-2 border">
-                  {editingId === packageItem.id ? (
-                    <input
-                      type="number"
-                      value={editedPrice}
-                      onChange={(e) => setEditedPrice(e.target.value)}
-                    />
-                  ) : (
-                    packageItem.price
-                  )}
-                </td>
-                <td>
-                  {editingId === packageItem.id ? (
-                    <button onClick={handleSaveClick}>Save</button>
-                  ) : (
-                    <button onClick={() => handleEditClick(packageItem.id, packageItem.name, packageItem.description, packageItem.price)}>
-                      <FaEdit color='#3fa277' size={'20px'} />
-                    </button>
-                  )}
-                </td>
-            
-      <th onClick={() => deletePackage(packageItem.id)}>
-  <RiDeleteBin6Line color='#3fa277' size={'20px'} />
-</th>
+              {packages.map((packageItem) => (
+                <tr key={packageItem.id}>
+                  <td className="border border-slate-400">{packageItem.id}</td>
+                  <td className="w-1/4 p-2 border">
+                    {editingId === packageItem.id ? (
+                      <input
+                        type="text"
+                        value={editedName}
+                        onChange={(e) => setEditedName(e.target.value)}
+                      />
+                    ) : (
+                      packageItem.name
+                    )}
+                  </td>
+                  <td className="w-1/4 p-2 border">
+                    {editingId === packageItem.id ? (
+                      <textarea
+                        value={editedDescription}
+                        onChange={(e) => setEditedDescription(e.target.value)}
+                      />
+                    ) : (
+                      packageItem.description
+                    )}
+                  </td>
+                  <td className="w-1/4 p-2 border">
+                    {editingId === packageItem.id ? (
+                      <input
+                        type="number"
+                        value={editedPrice}
+                        onChange={(e) => setEditedPrice(e.target.value)}
+                      />
+                    ) : (
+                      packageItem.price
+                    )}
+                  </td>
+                  <td>
+                    {editingId === packageItem.id ? (
+                      <button onClick={handleSaveClick}>Save</button>
+                    ) : (
+                      <button onClick={() => handleEditClick(packageItem.id, packageItem.name, packageItem.description, packageItem.price)}>
+                        <FaEdit color='#3fa277' size={'20px'} />
+                      </button>
+                    )}
+                  </td>
+
+                  <th onClick={() => deletePackage(packageItem.id)}>
+                    <RiDeleteBin6Line color='#3fa277' size={'20px'} />
+                  </th>
                 </tr>
               ))}
               {addPackage && (
@@ -479,7 +510,7 @@ export default function LeadInformation() {
         </div>
 
 
-         <div>
+        <div>
           <div class="text-[#3fa277] p-2 font-bold text-xl">Action Logs</div>
 
           <table class="w-full border-collapse border border-gray-300">
@@ -491,50 +522,50 @@ export default function LeadInformation() {
               </tr>
             </thead>
             <tbody>
-            {activityLogs.map((log) => (
-        <tr key={log.id}>
-          <td className="border border-slate-400">{log.id}</td>
-          <td className="w-1/4 p-2 border">
-            {editingLogId === log.id ? (
-              <input
-                type="date"
-                value={editedLog.date}
-                onChange={(e) =>
-                  setEditedLog({ ...editedLog, date: e.target.value })
-                }
-              />
-            ) : (
-              log.action_date
-            )}
-          </td>
-          <td className="w-1/4 p-2 border">
-            {editingLogId === log.id ? (
-              <textarea
-                value={editedLog.notes}
-                onChange={(e) =>
-                  setEditedLog({ ...editedLog, notes: e.target.value })
-                }
-              />
-            ) : (
-              log.notes
-            )}
-          </td>
-          <td>
-            {editingLogId === log.id ? (
-              <button onClick={handleSaveEdit}>Save</button>
-            ) : (
-              <button
-                onClick={() => handleEditClickAction(log.id, log.action_date, log.notes)}
-              >
-                <FaEdit color="#3fa277" size={'20px'} />
-              </button>
-            )}
-          </td>
-          <td onClick={() => deleteAction(log.id)}>
-            <RiDeleteBin6Line color="#3fa277" size={'20px'} />
-          </td>
-        </tr>
-      ))}
+              {activityLogs.map((log) => (
+                <tr key={log.id}>
+                  <td className="border border-slate-400">{log.id}</td>
+                  <td className="w-1/4 p-2 border">
+                    {editingLogId === log.id ? (
+                      <input
+                        type="date"
+                        value={editedLog.date}
+                        onChange={(e) =>
+                          setEditedLog({ ...editedLog, date: e.target.value })
+                        }
+                      />
+                    ) : (
+                      log.action_date
+                    )}
+                  </td>
+                  <td className="w-1/4 p-2 border">
+                    {editingLogId === log.id ? (
+                      <textarea
+                        value={editedLog.notes}
+                        onChange={(e) =>
+                          setEditedLog({ ...editedLog, notes: e.target.value })
+                        }
+                      />
+                    ) : (
+                      log.notes
+                    )}
+                  </td>
+                  <td>
+                    {editingLogId === log.id ? (
+                      <button onClick={handleSaveEdit}>Save</button>
+                    ) : (
+                      <button
+                        onClick={() => handleEditClickAction(log.id, log.action_date, log.notes)}
+                      >
+                        <FaEdit color="#3fa277" size={'20px'} />
+                      </button>
+                    )}
+                  </td>
+                  <td onClick={() => deleteAction(log.id)}>
+                    <RiDeleteBin6Line color="#3fa277" size={'20px'} />
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
           <div className="mt-4">
@@ -551,9 +582,10 @@ export default function LeadInformation() {
           </div>
         </div>
       </div>
-    
 
-       
-      </div>
-    
-  )}
+
+
+    </div>
+
+  )
+}

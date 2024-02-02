@@ -1,38 +1,48 @@
+// Import necessary hooks from React and other utility functions and components.
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase.js';
+import { useNavigate } from 'react-router-dom'; // To programmatically navigate between routes
+import { signInWithEmailAndPassword } from 'firebase/auth'; // Firebase auth function for signing in
+import { auth } from '../firebase.js'; // Import the auth object from the Firebase configuration
 
+// Define the Login component
 export default function Login() {
+  // State hooks to store the email, password, and a flag to indicate if login failed due to incorrect credentials
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [notFound, setNotFound] = useState(false);
 
+  // useNavigate hook from react-router-dom to programmatically navigate to different routes
   const navigate = useNavigate();
 
+  // handleLogin function is called when the form is submitted
   const handleLogin = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission behavior
 
+    // Use the signInWithEmailAndPassword function from Firebase to authenticate the user
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in successfully
+        // If sign in is successful, userCredential contains information about the logged-in user
         const user = userCredential.user;
-        console.log('User logged in:', user);
+        console.log('User logged in:', user); // Log the user information
 
-        // Redirect to the Home page or perform other actions as needed
+        const userEmail = user.email;
+        console.log("User email:", userEmail);
+        // Navigate to the Home page after successful login
         navigate('Home');
       })
       .catch((error) => {
-        console.error('Error logging in:', error);
-        // Handle login error and show user feedback
+        console.error('Error logging in:', error); // Log any error during the login process
+        // Set the notFound flag to true to show an error message to the user
         setNotFound(true);
       });
   };
 
+  // Function to navigate to the Sign Up page
   const goToSignUp = () => {
     navigate('SignUp');
   };
 
+  // The component renders a form for the user to log in
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-white">
       <form className="bg-white rounded-xl drop-shadow-lg space-y-5 py-20 px-5" action="" onSubmit={(e) => handleLogin(e)}>

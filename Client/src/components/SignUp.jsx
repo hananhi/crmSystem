@@ -1,37 +1,40 @@
-import React ,{useState} from 'react'
+// Import necessary React hooks and utilities
+import React, { useState } from 'react'; // Importing React and the useState hook for state management
+import { useNavigate } from 'react-router-dom'; // To programmatically navigate between routes
+import { createUserWithEmailAndPassword } from 'firebase/auth'; // Firebase auth function for creating a new user
+import { auth } from '../firebase.js'; // Import the auth object from the Firebase configuration
 
-import { useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase.js';
-
-
+// Define the SignUp component
 export default function SignUp() {
-    const navigate = useNavigate();
-  
-  const [newemail,setnewemail]=useState('');
-  const[newPassword,setnewpassword]=useState('');
-  const [found, setfound]=useState(false)
+  const navigate = useNavigate(); // useNavigate hook for navigating to different routes
 
+  // State hooks for storing user input and a flag to indicate if the user already exists
+  const [newemail, setnewemail] = useState('');
+  const [newPassword, setnewpassword] = useState('');
+  const [found, setfound] = useState(false); // Initially false, indicating no error in account creation
+
+  // handleSignUp function is executed when the form is submitted
   const handleSignUp = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission behavior
 
+    // Use the createUserWithEmailAndPassword function from Firebase to create a new user account
     createUserWithEmailAndPassword(auth, newemail, newPassword)
       .then((userCredential) => {
-        // Signed in successfully
+        // If the account is created successfully, userCredential contains information about the new user
         const user = userCredential.user;
-        console.log('User Sign up:', user);
+        console.log('User Sign up:', user); // Log the new user's information
 
-        // Redirect to the Home page or perform other actions as needed
+        // Navigate to the Home page after successful account creation
         navigate('/');
       })
       .catch((error) => {
-        console.error('Error sighn up :', error);
-        // Handle login error and show user feedback
+        console.error('Error sign up :', error); // Log any error during the account creation process
+        // Set the found flag to true to show an error message to the user
         setfound(true);
       });
   };
 
-  
+  // The component renders a form for the user to sign up
   return (
     
 

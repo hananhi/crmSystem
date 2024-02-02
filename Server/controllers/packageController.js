@@ -1,6 +1,6 @@
 import pool from '../server.js';
 
-
+//get package endpoint
 export const getPackages =async (req,res,next)=>{
 
     const id = req.params.id; // Corrected from req.params
@@ -28,6 +28,8 @@ export const getPackages =async (req,res,next)=>{
 
 
 }
+
+//add package endpoint
 export const addPackage =async (req,res,next)=>{
 
     const leadId = req.params.id;
@@ -65,6 +67,8 @@ export const addPackage =async (req,res,next)=>{
   }
 
 }
+
+//delete package endpoint
 export const deletePackage = async (req, res, next) => {
     const leadId = req.params.id;
     const packageId = req.params.packageId;
@@ -137,7 +141,7 @@ export const editPackage= async(req,res,next)=>{
               return;
             }
     
-            // Handle the success case, if needed
+            // Handle the success case
     
             res.status(200).json({ message: 'Package updated successfully' });
           }
