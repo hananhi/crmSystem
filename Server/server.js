@@ -4,17 +4,10 @@ import mysql from 'mysql'
 import { errorhandler } from "./middilewares/errorHandling.js";
 import cors from 'cors';
 import leadsRoutes from  './routes/leadsRoutes.js'
-import usersRoutes from  './routes/usersRoutes.js'
 
-import admin from 'firebase-admin';
-import serviceAccount from './firebaseServiceAccount.js';
+
 dotenv.config();
 
-
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
 
 
 const pool = mysql.createPool({
@@ -49,7 +42,7 @@ app.use( cors({credentials:true}));
 app.use(errorhandler);
 
 app.use('/leads',leadsRoutes);
-app.use('/users',usersRoutes)
+
 
 app.listen(4000, ()=>{
     console.log('listening on port 4000')
