@@ -1,47 +1,57 @@
-import React, { useState } from 'react'
+// Import necessary hook from React for state management
+import React, { useState } from 'react';
 
+// Define the NewLead component
 export default function NewLead() {
-
+  // State hook for managing lead data as an object
   const [leadData, setLeadData] = useState({
     leadName: '',
-    customerAccount:'',
+    customerAccount: '',
     phone: '',
     email: '',
     creationDate: '',
     lastModified: '',
-    status: 'new',
+    status: 'new', // Default status set to 'new'
   });
 
+  // handleChange function updates the leadData state based on form input changes
   const handleChange = (e) => {
     setLeadData({ ...leadData, [e.target.name]: e.target.value });
   };
 
+  // handleSubmit function to process the form submission
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Add your logic to handle form submission here
+    e.preventDefault(); // Prevent the default form submission action
+
+    // Logging the current state to demonstrate form submission handling
     console.log('Lead data submitted:', leadData);
-  
+
     try {
+      // Attempt to POST the leadData to a server endpoint
       const response = await fetch('http://localhost:4000/leads', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',  
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ leadData }),
+        body: JSON.stringify({ leadData }), // Send leadData as JSON payload
       });
-  
+
       if (response.ok) {
+        // If the POST request is successful, parse the JSON response
         const data = await response.json();
         console.log(data);
-        // If you want to update state with the new data, use setLeadsArray(data) or your desired state update logic
+        // Here you can update the state with the received data, or redirect the user, etc.
       } else {
+        // Log an error if the server response is not OK (e.g., 4XX or 5XX status codes)
         console.error('Failed to add lead:', response.status);
       }
     } catch (error) {
+      // Catch and log any errors in the fetch operation
       console.error('Error adding lead:', error);
     }
   };
-  
+
+  // Render the NewLead form component
 
   return (
     <div>

@@ -4,12 +4,11 @@ import mysql from 'mysql'
 import { errorhandler } from "./middilewares/errorHandling.js";
 import cors from 'cors';
 import leadsRoutes from  './routes/leadsRoutes.js'
+import customerRoutes from './routes/customerRoutes.js'
 
 
 dotenv.config();
-
-
-
+//dataBase connection 
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
@@ -34,19 +33,20 @@ pool.getConnection((err, connection) => {
 
 
 const app = express();
-app.use(express.json());
+app.use(express.json()); //parsing
 
 
-app.use( cors({credentials:true}));
+app.use( cors({credentials:true}));//middileware for cors
 
-app.use(errorhandler);
+app.use(errorhandler); //middileware for error
 
-app.use('/leads',leadsRoutes);
+app.use('/leads',leadsRoutes); //middileware for leads
+app.use('/customers',customerRoutes) //middileware for user
 
-
-app.listen(4000, ()=>{
-    console.log('listening on port 4000')
-})
+app.listen(process.env.PORT, () => {
+  console.log(`Listening`);
+ 
+});
 
 export default pool;
 

@@ -6,6 +6,7 @@ import { getActionLogs,deleteAction,editAction ,addActionLog} from '../controlle
 
 const router=express.Router() ;
 
+//routing for every endpoit
 router.get('/',getLeads);
 router.post('/',addLead);
 router.get('/:id',getLead);

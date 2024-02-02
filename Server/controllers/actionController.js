@@ -95,12 +95,12 @@ export const editAction= async(req,res,next)=>{
           [date, notes, leadId, logId],
           (error, results, fields) => {
             if (error) {
-              console.error('Error updating package:', error);
+              console.error('Error updating ', error);
               next(error);
               return;
             }
     
-            // Handle the success case, if needed
+            // Handle the success case
     
             res.status(200).json({ message: 'action updated successfully' });
           }

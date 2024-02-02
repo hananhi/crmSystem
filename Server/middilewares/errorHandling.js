@@ -1,3 +1,4 @@
+//error handling middileware
 export  const errorhandler=(error,req,res, next)=>{
 
     const statusCode=res.statusCode ?res.statusCode:500;
