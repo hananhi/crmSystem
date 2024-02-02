@@ -1,10 +1,4 @@
-import * as firebaseAdmin from 'firebase-admin';
 
-/*
-const admin = firebaseAdmin.initializeApp({
-    credential: firebaseAdmin.credential.applicationDefault(),
-  });
-*/
 export const getUser= async(req,res,next)=>{
 
     try {
