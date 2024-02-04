@@ -27,18 +27,18 @@ export default function LeadInformation() {
       setIsLoading(true); // Assume you have a state to track loading
       try {
         // Fetch lead details
-        const leadResponse = await fetch(`http://localhost:4000/leads/${leadId}`);
+        const leadResponse = await fetch(`https://crm-system3.onrender.com/leads/${leadId}`);
         const leadData = await leadResponse.json();
         console.log('Lead data:', leadData);
   
    
         // Fetch associated packages
-        const packagesResponse = await fetch(`http://localhost:4000/leads/${leadId}/packages`);
+        const packagesResponse = await fetch(`https://crm-system3.onrender.com/leads/${leadId}/packages`);
         const packagesData = await packagesResponse.json();
         console.log('Associated Packages:', packagesData);
   
         // Fetch associated action logs
-        const actionLogsResponse = await fetch(`http://localhost:4000/leads/${leadId}/actionlogs`);
+        const actionLogsResponse = await fetch(`https://crm-system3.onrender.com/leads/${leadId}/actionlogs`);
         const actionLogsData = await actionLogsResponse.json();
         console.log('Associated Action Logs:', actionLogsData);
   
@@ -60,49 +60,12 @@ export default function LeadInformation() {
   }, [state.leadId]); // Dependency array includes state.leadId
   
 
-/*
 
-  const handleRowClick = async (leadId) => {
-    try {
-
-      // Fetch lead details
-
-      const leadResponse = await fetch(`http://localhost:4000/leads/${leadId}`);
-      const leadData = await leadResponse.json();
-      console.log('im here', leadData);
-
-      // Fetch associated packages
-      const packagesResponse = await fetch(`http://localhost:4000/leads/${leadId}/packages`);
-      const packagesData = await packagesResponse.json();
-      console.log('Associated Packages:', packagesData);
-
-      // Fetch associated action logs
-      const actionLogsResponse = await fetch(`http://localhost:4000/leads/${leadId}/actionlogs`);
-      const actionLogsData = await actionLogsResponse.json();
-
-      console.log('lead',leadData)
-  
-  
-
-      setPackages(packagesData);
-      setActivityLogs(actionLogsData);
-      // Display or handle the retrieved data as needed
-      console.log('Associated Action Logs:', actionLogsData);
-
-      setData(leadData);
-      // You can now use the data to update the UI or display it in a modal, for example.
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  console.log('hi',Data);
-  */
 //delete function for the selected package
   async function deletePackage(id) {
 
     try {
-      const response = await fetch(`http://localhost:4000/leads/${state.leadId}/packages/${id}`, {
+      const response = await fetch(`https://crm-system3.onrender.com/leads/${state.leadId}/packages/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -125,7 +88,7 @@ export default function LeadInformation() {
 //delete function for the selected action
   async function deleteAction(id) {
     try {
-      const response = await fetch(`http://localhost:4000/leads/${state.leadId}/actionlogs/${id}`, {
+      const response = await fetch(`https://crm-system3.onrender.com/leads/${state.leadId}/actionlogs/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -168,7 +131,7 @@ export default function LeadInformation() {
   
 
       // Make a POST request to the server to add the package
-      const response = await fetch(`http://localhost:4000/leads/${state.leadId}/packages`, {
+      const response = await fetch(`https://crm-system3.onrender.com/leads/${state.leadId}/packages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -209,7 +172,7 @@ export default function LeadInformation() {
 
 
       // Make a POST request to the server to add the action 
-      const response = await fetch(`http://localhost:4000/leads/${state.leadId}/actionlogs`, {
+      const response = await fetch(`https://crm-system3.onrender.com/leads/${state.leadId}/actionlogs`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -272,7 +235,7 @@ export default function LeadInformation() {
   const handleSaveClick = async () => {
     try {
       // Make an API call to update the data on the server
-      const response = await fetch(`http://localhost:4000/leads/${state.leadId}/packages/${editingId}`, {
+      const response = await fetch(`https://crm-system3.onrender.com/leads/${state.leadId}/packages/${editingId}`, {
         method: 'PATCH', // Assuming you use a PUT request for updating
         headers: {
           'Content-Type': 'application/json',
@@ -326,7 +289,7 @@ export default function LeadInformation() {
   const handleSaveEdit = async () => {
     try {
       // Make an API call to update the data on the server
-      const response = await fetch(`http://localhost:4000/leads/${state.leadId}/actionlogs/${editingLogId}`, {
+      const response = await fetch(`https://crm-system3.onrender.com/leads/${state.leadId}/actionlogs/${editingLogId}`, {
         method: 'PATCH', // Assuming you use a PUT request for updating
         headers: {
           'Content-Type': 'application/json',
