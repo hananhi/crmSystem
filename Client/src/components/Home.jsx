@@ -20,7 +20,7 @@ export default function Home() {
   const fetchData = async () => {
 
     try {
-      const response = await fetch('http://localhost:4000/leads/');
+      const response = await fetch('https://crm-system3.onrender.com/leads/');
       const data = await response.json();
       console.log(data);
 
