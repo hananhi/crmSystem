@@ -10,7 +10,7 @@ export default function Home() {
 
   const [leadsArray, setLeadsArray] = useState([]); //array of the leads 
   const navigate = useNavigate();
-
+ 
 
   //use effect to perform fetch to call the leads 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function Home() {
   const fetchData = async () => {
 
     try {
-      const response = await fetch('https://crm-system3.onrender.com/leads/');
+      const response = await fetch('http://localhost:4000/leads/');
       const data = await response.json();
       console.log(data);
 
@@ -30,6 +30,9 @@ export default function Home() {
     }
 
   };
+
+
+
 
 // go to NewLead page when the user click on New botton
   function newLeadPage() {
@@ -59,13 +62,11 @@ export default function Home() {
         <div className='flex '><GoPin size={'30px'} color='#3fa277 ' className='mt-2 mr-2' />
           <div className='text-[#3fa277] font-bold text-4xl'>My Opportiontes </div>
         </div>
-        <label className="relative block w-[600px] mr-6 mt-2">
-          <span className="sr-only">Search</span>
-          <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-            <svg className="h-5 w-5 fill-slate-300" viewBox="0 0 20 20"></svg>
-          </span>
-          <input className="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-[#3fa277] focus:ring-[#3fa277] focus:ring-1 sm:text-sm" placeholder="Search for anything..." type="text" name="search" />
-        </label>
+        <div className="relative block w-[600px] mr-6 mt-2">
+        <marquee width="90%" direction="left" height="100px">
+Reminder , you have meeting after 10 min with 
+</marquee>
+        </div>
       </div>
 {/* the table of the leads */}
       <div>

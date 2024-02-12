@@ -7,7 +7,7 @@ export const getLead = (req, res, next) => {
     
     
             // Use pool.query for executing the query
-            pool.query('SELECT * FROM Leads WHERE id = ?', [id], (error, results, fields) => {
+            pool.query('SELECT * FROM leads WHERE id = ?', [id], (error, results, fields) => {
                 if (error) {
                     console.error('Error in getLead:', error);
                     next(error);
@@ -32,7 +32,7 @@ export const addLead =async (req,res,next)=>{
         const { leadName, customerAccount, phone, email, status } = req.body.leadData;
         
         // Use pool.query for executing the query
-        pool.query('INSERT INTO Leads (name, customer_account, phone, email, status) VALUES (?, ?, ?, ?, ?)', [leadName, customerAccount, phone, email, status], (error, results) => {
+        pool.query('INSERT INTO leads (name, customer_account, phone, email, status) VALUES (?, ?, ?, ?, ?)', [leadName, customerAccount, phone, email, status], (error, results) => {
             if (error) {
                 console.error('Error in addLead:', error);
                 next(error);
@@ -53,7 +53,7 @@ export const addLead =async (req,res,next)=>{
 export const getLeads = (req, res, next) => {
     try {
         // Use pool.query for executing the query
-        pool.query('SELECT * FROM Leads', (error, results, fields) => {
+        pool.query('SELECT * FROM leads', (error, results, fields) => {
             if (error) {
                 console.error('Error in getLeads:', error);
                 next(error);

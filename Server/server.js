@@ -5,15 +5,17 @@ import { errorhandler } from "./middilewares/errorHandling.js";
 import cors from 'cors';
 import leadsRoutes from  './routes/leadsRoutes.js'
 import customerRoutes from './routes/customerRoutes.js'
+import { scheduleReminders } from './controllers/meetingController.js';
+import whatsappClient from './controllers/whatsAppclientController.js';
 
 
 dotenv.config();
 //dataBase connection 
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'crm-system',
+    host: '185.229.114.1',
+    user: 'u636091749_hanan',
+    password: ']h!#MH*8dV',
+    database: 'u636091749_crm',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -29,23 +31,32 @@ pool.getConnection((err, connection) => {
     console.log('Connected to MySQL!');
 
     connection.release();
+    scheduleReminders();
+   
 })
 
 
 const app = express();
+
 app.use(express.json()); //parsing
 
 
-app.use( cors({credentials:true}));//middileware for cors
+app.use( cors());//middileware for cors
 
 app.use(errorhandler); //middileware for error
+
 
 app.use('/leads',leadsRoutes); //middileware for leads
 app.use('/customers',customerRoutes) //middileware for user
 
+
 app.listen(process.env.PORT, () => {
   console.log(`Listening`);
  
+});
+whatsappClient.on('ready', () => {
+  console.log('Client is ready, scheduling reminders.');
+  scheduleReminders(); // Ensure this is only called once the client is ready
 });
 
 export default pool;

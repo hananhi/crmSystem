@@ -1,3 +1,4 @@
+import pool from '../server.js';
 export const getCustomers =async (req,res,next)=>{
 
 

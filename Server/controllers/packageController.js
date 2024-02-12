@@ -8,7 +8,7 @@ export const getPackages =async (req,res,next)=>{
     console.log(id);
     try {
         // Use pool.query for executing the query
-        pool.query('SELECT * FROM Packages WHERE lead_id = ?', [id], (error, results, fields) => {
+        pool.query('SELECT * FROM packages WHERE lead_id = ?', [id], (error, results, fields) => {
             if (error) {
                 console.error('Error in getPackages:', error);
                 next(error);
@@ -42,7 +42,7 @@ export const addPackage =async (req,res,next)=>{
   try {
     // Use pool.query for executing the INSERT query
     pool.query(
-      'INSERT INTO Packages (id, lead_id, name, description, price) VALUES (?, ?, ?, ?, ?)',
+      'INSERT INTO packages (id, lead_id, name, description, price) VALUES (?, ?, ?, ?, ?)',
       [newPackage.id, leadId, newPackage.name, newPackage.description, newPackage.price],
       (error, results, fields) => {
         if (error) {
@@ -78,7 +78,7 @@ export const deletePackage = async (req, res, next) => {
 
         // Use pool.query for executing the DELETE query
         pool.query(
-            'DELETE FROM Packages WHERE lead_id = ? AND id = ?',
+            'DELETE FROM packages WHERE lead_id = ? AND id = ?',
             [leadId, packageId],
             (error, results, fields) => {
                 if (error) {
@@ -129,7 +129,7 @@ export const editPackage= async(req,res,next)=>{
         // Use pool.query to execute the update query
         pool.query(
           `
-          UPDATE Packages
+          UPDATE packages
           SET name = ?, description = ?, price = ?
           WHERE lead_id = ? AND id = ?;
         `,

@@ -4,6 +4,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import Header from './Header';
 import { useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
+import Meeting from './Meeting';
 
 
 export default function LeadInformation() {
@@ -20,6 +21,9 @@ export default function LeadInformation() {
   const [editedPrice, setEditedPrice] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
+
+const id=state.leadId;
+
   useEffect(() => {
     // Define handleRowClick inside useEffect
    
@@ -27,23 +31,24 @@ export default function LeadInformation() {
       setIsLoading(true); // Assume you have a state to track loading
       try {
         // Fetch lead details
-        const leadResponse = await fetch(`https://crm-system3.onrender.com/leads/${leadId}`);
+        const leadResponse = await fetch(`http://localhost:4000/leads/${leadId}`);
         const leadData = await leadResponse.json();
         console.log('Lead data:', leadData);
   
    
+   setData(leadData);
         // Fetch associated packages
-        const packagesResponse = await fetch(`https://crm-system3.onrender.com/leads/${leadId}/packages`);
+        const packagesResponse = await fetch(`http://localhost:4000/leads/${leadId}/packages`);
         const packagesData = await packagesResponse.json();
         console.log('Associated Packages:', packagesData);
   
         // Fetch associated action logs
-        const actionLogsResponse = await fetch(`https://crm-system3.onrender.com/leads/${leadId}/actionlogs`);
+        const actionLogsResponse = await fetch(`http://localhost:4000/leads/${leadId}/actionlogs`);
         const actionLogsData = await actionLogsResponse.json();
         console.log('Associated Action Logs:', actionLogsData);
   
         // Update state with fetched data
-        setData(leadData);
+
         setPackages(packagesData);
         setActivityLogs(actionLogsData);
       } catch (error) {
@@ -58,14 +63,13 @@ export default function LeadInformation() {
       handleRowClick(state.leadId);
     }
   }, [state.leadId]); // Dependency array includes state.leadId
-  
 
 
 //delete function for the selected package
   async function deletePackage(id) {
 
     try {
-      const response = await fetch(`https://crm-system3.onrender.com/leads/${state.leadId}/packages/${id}`, {
+      const response = await fetch(`http://localhost:4000/leads/${state.leadId}/packages/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +92,7 @@ export default function LeadInformation() {
 //delete function for the selected action
   async function deleteAction(id) {
     try {
-      const response = await fetch(`https://crm-system3.onrender.com/leads/${state.leadId}/actionlogs/${id}`, {
+      const response = await fetch(`http://localhost:4000/leads/${state.leadId}/actionlogs/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -131,7 +135,7 @@ export default function LeadInformation() {
   
 
       // Make a POST request to the server to add the package
-      const response = await fetch(`https://crm-system3.onrender.com/leads/${state.leadId}/packages`, {
+      const response = await fetch(`http://localhost:4000/leads/${state.leadId}/packages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -172,7 +176,7 @@ export default function LeadInformation() {
 
 
       // Make a POST request to the server to add the action 
-      const response = await fetch(`https://crm-system3.onrender.com/leads/${state.leadId}/actionlogs`, {
+      const response = await fetch(`http://localhost:4000/leads/${state.leadId}/actionlogs`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -235,7 +239,7 @@ export default function LeadInformation() {
   const handleSaveClick = async () => {
     try {
       // Make an API call to update the data on the server
-      const response = await fetch(`https://crm-system3.onrender.com/leads/${state.leadId}/packages/${editingId}`, {
+      const response = await fetch(`http://localhost:4000/leads/${state.leadId}/packages/${editingId}`, {
         method: 'PATCH', // Assuming you use a PUT request for updating
         headers: {
           'Content-Type': 'application/json',
@@ -289,7 +293,7 @@ export default function LeadInformation() {
   const handleSaveEdit = async () => {
     try {
       // Make an API call to update the data on the server
-      const response = await fetch(`https://crm-system3.onrender.com/leads/${state.leadId}/actionlogs/${editingLogId}`, {
+      const response = await fetch(`http://localhost:4000/leads/${state.leadId}/actionlogs/${editingLogId}`, {
         method: 'PATCH', // Assuming you use a PUT request for updating
         headers: {
           'Content-Type': 'application/json',
@@ -315,45 +319,58 @@ export default function LeadInformation() {
     }
   };
 
-
+  console.log('@sos',Data);
   return (
     <div>
       <Header />
 
-      {Data ? (
+<Meeting/>
+
+{Data.length > 0 ? (
+  
+  <div>
+  <div className='flex justify-between mt-6 ml-6'>
+    <div className='w-[50%] text-[#3fa277] font-bold text-2xl'>
+      {/* Display Opportunity Name */}
+      <div>Opportunity Name: {Data[0].name}</div>
+    </div>
+
+    <div className='flex justify-evenly w-[30%] text-[#3fa277] text-center'>
+      {/* Display Creation Date */}
+      <div className='border-r-2 p-3'>
+        <div>Creation Date</div>
+        <div>{new Date(Data[0].creation_date).toLocaleDateString()}</div>
+      </div>
+
+      {/* Display Last Modified Date */}
+      <div className='border-r-2 p-3'>
+        <div>Last Modified</div>
+        <div>{new Date(Data[0].last_modified).toLocaleDateString()}</div>
+      </div>
+
+      {/* Display Status */}
+      <div className='p-3'>
+        <div>Status</div>
+        <div>{Data[0].status}</div> {/* Assuming Status is static. If dynamic, use {Data.status} */}
+      </div>
+    </div>
+  </div>
+</div>
+) : (
+<div>Loading...</div>
+)}
+
+
+
+
+
+
   <div>
 
     
     {/* Display other details as needed */}
 
-    <div className='flex justify-between mt-6 ml-6'>
-      <div className='w-[50%] text-[#3fa277] font-bold text-2xl'>
-        <div>Opportunity Name </div> {/* Repeated Opportunity Name? Consider removing if unnecessary */}
-      </div>
-
-      <div className='flex justify-evenly w-[30%] text-[#3fa277] text-center'>
-        <div className='border-r-2 p-3'>
-          <div>Creation Date</div>
-          {/* Format the creation date */}
-          {/*<div>{new Date(Data[0].creation_date).toLocaleDateString()}</div>*/}
-        </div>
-
-        <div className='border-r-2 p-3'>
-          <div>Last Modified</div>
-          {/* Format the last modified date */}
-        {/*  <div>{new Date(Data[0].last_modified).toLocaleDateString()}</div>*/}
-        </div>
-
-        <div className='p-3'>
-          <div>Status</div>
-          <div>New</div>
-        </div>
-      </div>
-    </div>
-  </div>
-) : (
-  <p>Loading lead details...</p>
-)}
+   
 
 
       <div className='flex flex-col space-y-20 m-10 '>
@@ -548,6 +565,7 @@ export default function LeadInformation() {
 
 
 
+    </div>
     </div>
 
   )

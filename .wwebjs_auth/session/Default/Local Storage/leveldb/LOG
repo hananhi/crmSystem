@@ -1,0 +1,6 @@
+2024/02/12-16:38:48.753 4810 Reusing MANIFEST C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
+2024/02/12-16:38:48.754 4810 Recovering log #10
+2024/02/12-16:38:48.755 4810 Reusing old log C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\Local Storage\leveldb/000010.log 
+2024/02/12-16:39:49.741 44a4 Level-0 table #14: started
+2024/02/12-16:39:49.749 44a4 Level-0 table #14: 15828 bytes OK
+2024/02/12-16:39:49.754 44a4 Delete type=0 #10
