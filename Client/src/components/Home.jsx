@@ -9,12 +9,15 @@ import { useEffect } from 'react';
 export default function Home() {
 
   const [leadsArray, setLeadsArray] = useState([]); //array of the leads 
+  const [upcoming, setUpcoming] = useState([]);
   const navigate = useNavigate();
  
+
 
   //use effect to perform fetch to call the leads 
   useEffect(() => {
     fetchData();
+    
   }, [])
 
   const fetchData = async () => {
@@ -25,6 +28,20 @@ export default function Home() {
       console.log(data);
 
       setLeadsArray(data);
+
+      const upcomingMeeting = data.filter(e => {
+        // Ensure e.meeting_data is a valid date string
+        const meetingDateTime = new Date(e.meeting_datetime); // Convert to Date object
+        const now = new Date(); // Current date and time
+        const twoHoursFifteenMinutesLater = new Date(now.getTime() + (2 * 60 * 60 * 1000) + (15 * 60 * 1000)); // Now + 2 hours and 15 minutes
+      
+        // Check if meeting_datetime is before twoHoursFifteenMinutesLater and send_reminder is 0
+        return meetingDateTime < twoHoursFifteenMinutesLater && e.send_reminder === 0;
+      });
+
+      console.log('upcomingMeeting',upcomingMeeting);
+      setUpcoming(upcomingMeeting);
+
     } catch (error) {
       console.error('Error fetching leads:', error);
     }
@@ -63,9 +80,11 @@ export default function Home() {
           <div className='text-[#3fa277] font-bold text-4xl'>My Opportiontes </div>
         </div>
         <div className="relative block w-[600px] mr-6 mt-2">
-        <marquee width="90%" direction="left" height="100px">
-Reminder , you have meeting after 10 min with 
-</marquee>
+      
+    <marquee width="90%" direction="left" height="100px " className='text-red-700'>
+        {upcoming.length > 0 ?'Reminder, you have a meeting after 10 min with '+ upcoming[0].customer_account : "you don't have an upcoming meeting"}.
+    </marquee>
+
         </div>
       </div>
 {/* the table of the leads */}

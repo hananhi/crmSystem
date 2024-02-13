@@ -15,7 +15,7 @@ export const getLead = (req, res, next) => {
                 }
     
                 // Log the retrieved results
-                console.log(results);
+                //console.log(results);
     
                 // Send the results as a JSON response
                 res.json(results);
@@ -25,6 +25,8 @@ export const getLead = (req, res, next) => {
             next(error);
         }
 };
+
+
 
 export const addLead =async (req,res,next)=>{
 

@@ -50,6 +50,7 @@ app.use('/leads',leadsRoutes); //middileware for leads
 app.use('/customers',customerRoutes) //middileware for user
 
 
+
 app.listen(process.env.PORT, () => {
   console.log(`Listening`);
  
@@ -58,6 +59,7 @@ whatsappClient.on('ready', () => {
   console.log('Client is ready, scheduling reminders.');
   scheduleReminders(); // Ensure this is only called once the client is ready
 });
+
 
 export default pool;
 

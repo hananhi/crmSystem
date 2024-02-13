@@ -4,7 +4,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import Header from './Header';
 import { useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
-import Meeting from './Meeting';
+
 
 
 export default function LeadInformation() {
@@ -323,9 +323,6 @@ const id=state.leadId;
   return (
     <div>
       <Header />
-
-<Meeting/>
-
 {Data.length > 0 ? (
   
   <div>

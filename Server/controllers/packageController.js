@@ -16,7 +16,7 @@ export const getPackages =async (req,res,next)=>{
             }
 
             // Log the retrieved results
-            console.log('Packages:', results);
+           // console.log('Packages:', results);
 
             // Send the results as a JSON response
             res.json(results);
