@@ -1,5 +1,11 @@
 {
   "dependencies": {
-    "firebase": "^10.8.0"
+    "firebase": "^10.8.0",
+    "moment-timezone": "^0.5.45",
+    "node-cron": "^3.0.3",
+    "node-schedule": "^2.1.1",
+    "qrcode-terminal": "^0.12.0",
+    "twilio": "^4.21.0",
+    "whatsapp-web.js": "^1.23.0"
   }
 }

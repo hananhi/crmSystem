@@ -9,27 +9,47 @@ import { useEffect } from 'react';
 export default function Home() {
 
   const [leadsArray, setLeadsArray] = useState([]); //array of the leads 
+  const [upcoming, setUpcoming] = useState([]);
   const navigate = useNavigate();
+ 
 
 
   //use effect to perform fetch to call the leads 
   useEffect(() => {
     fetchData();
+    
   }, [])
 
   const fetchData = async () => {
 
     try {
-      const response = await fetch('https://crm-system3.onrender.com/leads/');
+      const response = await fetch('http://localhost:4000/leads/');
       const data = await response.json();
       console.log(data);
 
       setLeadsArray(data);
+
+      const upcomingMeeting = data.filter(e => {
+        // Ensure e.meeting_data is a valid date string
+        const meetingDateTime = new Date(e.meeting_datetime); // Convert to Date object
+        const now = new Date(); // Current date and time
+        const twoHoursFifteenMinutesLater = new Date(now.getTime() + (2 * 60 * 60 * 1000) + (15 * 60 * 1000)); // Now + 2 hours and 15 minutes
+      
+        // Check if meeting_datetime is before twoHoursFifteenMinutesLater and send_reminder is 0
+        return meetingDateTime < twoHoursFifteenMinutesLater && e.send_reminder === 0;
+      });
+
+      console.log('upcomingMeeting',upcomingMeeting);
+      setUpcoming(upcomingMeeting);
+
     } catch (error) {
       console.error('Error fetching leads:', error);
     }
 
   };
+
+
+
 
 // go to NewLead page when the user click on New botton
   function newLeadPage() {
@@ -59,13 +79,13 @@ export default function Home() {
         <div className='flex '><GoPin size={'30px'} color='#3fa277 ' className='mt-2 mr-2' />
           <div className='text-[#3fa277] font-bold text-4xl'>My Opportiontes </div>
         </div>
-        <label className="relative block w-[600px] mr-6 mt-2">
-          <span className="sr-only">Search</span>
-          <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-            <svg className="h-5 w-5 fill-slate-300" viewBox="0 0 20 20"></svg>
-          </span>
-          <input className="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-[#3fa277] focus:ring-[#3fa277] focus:ring-1 sm:text-sm" placeholder="Search for anything..." type="text" name="search" />
-        </label>
+        <div className="relative block w-[600px] mr-6 mt-2">
+      
+    <marquee width="90%" direction="left" height="100px " className='text-red-700'>
+        {upcoming.length > 0 ?'Reminder, you have a meeting after 10 min with '+ upcoming[0].customer_account : "you don't have an upcoming meeting"}.
+    </marquee>
+
+        </div>
       </div>
 {/* the table of the leads */}
       <div>

@@ -8,7 +8,7 @@ export const getActionLogs =async (req,res,next)=>{
     console.log(id);
     try {
         // Use pool.query for executing the query
-        pool.query('SELECT * FROM ActionLogs WHERE lead_id = ?', [id], (error, results, fields) => {
+        pool.query('SELECT * FROM actionlogs WHERE lead_id = ?', [id], (error, results, fields) => {
             if (error) {
                 console.error('Error in getPackages:', error);
                 next(error);
@@ -16,7 +16,7 @@ export const getActionLogs =async (req,res,next)=>{
             }
 
             // Log the retrieved results
-            console.log('Packages:', results);
+           // console.log('Packages:', results);
 
             // Send the results as a JSON response
             res.json(results);

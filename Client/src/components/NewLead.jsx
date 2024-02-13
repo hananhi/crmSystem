@@ -1,9 +1,12 @@
 // Import necessary hook from React for state management
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Define the NewLead component
 export default function NewLead() {
   // State hook for managing lead data as an object
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [leadData, setLeadData] = useState({
     leadName: '',
     customerAccount: '',
@@ -14,6 +17,7 @@ export default function NewLead() {
     status: 'new', // Default status set to 'new'
   });
 
+  const navigate = useNavigate();
   // handleChange function updates the leadData state based on form input changes
   const handleChange = (e) => {
     setLeadData({ ...leadData, [e.target.name]: e.target.value });
@@ -23,6 +27,7 @@ export default function NewLead() {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission action
 
+    setIsSubmitting(true);
     // Logging the current state to demonstrate form submission handling
     console.log('Lead data submitted:', leadData);
 
@@ -40,6 +45,7 @@ export default function NewLead() {
         // If the POST request is successful, parse the JSON response
         const data = await response.json();
         console.log(data);
+        navigate('/Home')
         // Here you can update the state with the received data, or redirect the user, etc.
       } else {
         // Log an error if the server response is not OK (e.g., 4XX or 5XX status codes)
@@ -48,6 +54,10 @@ export default function NewLead() {
     } catch (error) {
       // Catch and log any errors in the fetch operation
       console.error('Error adding lead:', error);
+    }
+    finally {
+      // Re-enable the submit button after a delay, regardless of request outcome
+      setTimeout(() => setIsSubmitting(false), 5000);
     }
   };
 
@@ -108,7 +118,9 @@ export default function NewLead() {
           </div>
 
           {/* Submit Button */}
-          <button type="submit" className="bg-[#3fa277] text-white p-2 rounded hover:bg-[#3fa277] " >Create</button>
+          <button type="submit" className="bg-[#3fa277] text-white p-2 rounded hover:bg-[#3fa277] "  disabled={isSubmitting}> {isSubmitting ? 'Adding new Lead...' : 'Create'}</button>
+
+        
         </form>
       </div>
 
