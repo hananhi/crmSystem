@@ -5,8 +5,8 @@ import { errorhandler } from "./middilewares/errorHandling.js";
 import cors from 'cors';
 import leadsRoutes from  './routes/leadsRoutes.js'
 import customerRoutes from './routes/customerRoutes.js'
-import { scheduleReminders } from './controllers/meetingController.js';
-import whatsappClient from './controllers/whatsAppclientController.js';
+//import { scheduleReminders } from './controllers/meetingController.js';
+//import whatsappClient from './controllers/whatsAppclientController.js';
 
 
 dotenv.config();
@@ -31,7 +31,7 @@ pool.getConnection((err, connection) => {
     console.log('Connected to MySQL!');
 
     connection.release();
-    scheduleReminders();
+   // scheduleReminders();
    
 })
 
@@ -55,11 +55,12 @@ app.listen(process.env.PORT, () => {
   console.log(`Listening`);
  
 });
+/*
 whatsappClient.on('ready', () => {
   console.log('Client is ready, scheduling reminders.');
   scheduleReminders(); // Ensure this is only called once the client is ready
 });
-
+*/
 
 export default pool;
 

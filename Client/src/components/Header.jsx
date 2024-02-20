@@ -3,7 +3,7 @@ import React from 'react'
 //header component - design 
 export default function Header() {
   return (
-    <div className="bg-[#3fa277] p-[1%]  flex flex-row justify-between ">
+    <div className="bg-teal-500 p-[1%]  flex flex-row justify-between ">
       <div className='text-white font-bold mt-1 text-3xl'>CRM System</div>
       <div class=" flex ">
         <div className='mr-4 text-white mt-2'>UserName</div>

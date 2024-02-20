@@ -1,7 +1,7 @@
 // Import necessary hooks from React and other utility functions and components.
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // To programmatically navigate between routes
-import { signInWithEmailAndPassword } from 'firebase/auth'; // Firebase auth function for signing in
+import { signInWithEmailAndPassword ,sendPasswordResetEmail} from 'firebase/auth'; // Firebase auth function for signing in
 import { auth } from '../firebase.js'; // Import the auth object from the Firebase configuration
 
 // Define the Login component
@@ -34,6 +34,22 @@ export default function Login() {
         console.error('Error logging in:', error); // Log any error during the login process
         // Set the notFound flag to true to show an error message to the user
         setNotFound(true);
+      });
+  };
+
+  // Function to handle password reset request
+  const handlePasswordReset = () => {
+    if (!email) {
+      alert("Please enter your email address to reset your password.");
+      return;
+    }
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        alert("Password reset email sent. Please check your inbox.");
+      })
+      .catch((error) => {
+        console.error('Error sending password reset email:', error);
+        alert("Failed to send password reset email. Please try again.");
       });
   };
 
@@ -80,6 +96,7 @@ export default function Login() {
         </div>
 
         {notFound && <div className="text-[#ff0000]">Email or Password Incorrect</div>}
+        <a onClick={handlePasswordReset}>Forgot Password?</a>
 
         <button
           className="w-full px-10 py-2 bg-[#3fa277] text-white rounded-md hover:bg-blue-500 hover:drop-shadow-md duration-300 ease-in"

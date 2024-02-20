@@ -10,6 +10,7 @@ export default function Home() {
 
   const [leadsArray, setLeadsArray] = useState([]); //array of the leads 
   const [upcoming, setUpcoming] = useState([]);
+  const [numberOfLeads,setNumberOfLeads]=useState();
   const navigate = useNavigate();
  
 
@@ -28,6 +29,8 @@ export default function Home() {
       console.log(data);
 
       setLeadsArray(data);
+      setNumberOfLeads(data.length);
+      
 
       const upcomingMeeting = data.filter(e => {
         // Ensure e.meeting_data is a valid date string
@@ -65,64 +68,74 @@ export default function Home() {
   };
 
   return (
-
-    <div>
-      <Header />
-      <div className=' flex '>
-        <div className='flex  hover:bg-[#d5f7e8] ml-3 p-2'>
-          <FaPlus color='#3fa277' size={'20px'} />
-          <div className='text-[#3fa277] font-bold ml-1' onClick={newLeadPage}>New</div>
-        </div>
-      </div>
-
-      <div className='flex justify-between mt-6 ml-6'>
-        <div className='flex '><GoPin size={'30px'} color='#3fa277 ' className='mt-2 mr-2' />
-          <div className='text-[#3fa277] font-bold text-4xl'>My Opportiontes </div>
-        </div>
-        <div className="relative block w-[600px] mr-6 mt-2">
+    <div className=' bg-gray-50'>
+<Header />
+<div className='flex items-center space-x-2 p-2 rounded-lg'>
+<button className="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-teal-200 ml-2" onClick={newLeadPage}>
+              <FaPlus color="#2f855a" size="20px" />
+              <div className="text-teal-800 font-bold">New</div>
+            </button>
+             
+             <div className='text-teal-800 font-bold mt-6'>
+             <div >Number of Leads <span className='bg-teal-800 text-white px-2 rounded-md'>{numberOfLeads}</span></div>
+             </div>
+             </div>
+<div className='w-full'>
+    <div className="min-h-screen bg-gray-50 py-6 flex flex-col justify-center sm:py-12">
       
-    <marquee width="90%" direction="left" height="100px " className='text-red-700'>
-        {upcoming.length > 0 ?'Reminder, you have a meeting after 10 min with '+ upcoming[0].customer_account : "you don't have an upcoming meeting"}.
-    </marquee>
+      <div className="relative py-3 sm:mx-auto ">
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-green-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-lg"></div>
+        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-lg sm:p-20">
+          <div className="flex justify-between items-center mb-8">
+           
+            <div className="flex space-x-4">
+              <GoPin size="30px" color="#2f855a" />
+              <h1 className="text-teal-800 font-bold text-4xl">My Opportunities</h1>
+            </div>
+            <div className="w-full max-w-md">
+              <marquee behavior="scroll" direction="left" className="block text-red-700">
+                {upcoming.length > 0 ? `Reminder, you have a meeting in 10 min with ${upcoming[0].customer_account}` : "You don't have an upcoming meeting."}
+              </marquee>
+            </div>
+          </div>
 
+          {/* Leads table */}
+          <div className="overflow-x-auto">
+            <table className="w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Lead Name</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Customer Account</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Phone Number</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {leadsArray.map((lead) => (
+                  <tr key={lead.id} className="hover:bg-teal-50 cursor-pointer" onClick={() => handleRowClick(lead.id)}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{lead.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.customer_account}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.email}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.phone}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <select className="form-select block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
+                        <option value="new" selected={lead.status === 'new'}>New</option>
+                        <option value="quote_given" selected={lead.status === 'quote given'}>Quote Given</option>
+                        <option value="advance_paid" selected={lead.status === 'advance paid'}>Advance Paid</option>
+                        <option value="full_amount_paid" selected={lead.status === 'full amount paid'}>Full Amount Paid</option>
+                        <option value="sale_loss" selected={lead.status === 'sale loss'}>Sale Loss</option>
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-{/* the table of the leads */}
-      <div>
-        <table class="border-collapse border border-slate-400 w-full mt-7">
-          <thead>
-            <tr>
-              <th class="border border-slate-400 ...">Lead Name</th>
-              <th class="border border-slate-400 ...">Customer Account</th>
-              <th class="border border-slate-400 ...">Email</th>
-              <th class="border border-slate-400 ...">Phone Number</th>
-              <th class="border border-slate-400 ...">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leadsArray.map(lead => (
-              <tr
-                className='hover:bg-[#d5f7e8]'
-                key={lead.id}
-                onClick={() => handleRowClick(lead.id)}>
-                <td className="border border-slate-400">{lead.name}</td>
-                <td className="border border-slate-400">{lead.customer_account}</td>
-                <td className="border border-slate-400">{lead.email}</td>
-                <td className="border border-slate-400">{lead.phone}</td>
-                <td className="border border-slate-400">
-                  <select className='w-[100%]'>
-                    <option value="new" selected={lead.status === 'new'}>New</option>
-                    <option value="quote_given" selected={lead.status === 'quote given'}>Quote Given</option>
-                    <option value="advance_paid" selected={lead.status === 'advance paid'}>Advance Paid</option>
-                    <option value="full_amount_paid" selected={lead.status === 'full amount paid'}>Full Amount Paid</option>
-                    <option value="sale_loss" selected={lead.status === 'sale loss'}>Sale Loss</option>
-                  </select>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    </div>
+    </div>
     </div>
   )
 }

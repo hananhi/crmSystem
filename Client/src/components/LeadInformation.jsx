@@ -327,12 +327,12 @@ const id=state.leadId;
   
   <div>
   <div className='flex justify-between mt-6 ml-6'>
-    <div className='w-[50%] text-[#3fa277] font-bold text-2xl'>
+    <div className='w-[50%] text-teal-500 font-bold text-2xl'>
       {/* Display Opportunity Name */}
       <div>Opportunity Name: {Data[0].name}</div>
     </div>
 
-    <div className='flex justify-evenly w-[30%] text-[#3fa277] text-center'>
+    <div className='flex justify-evenly w-[30%] text-teal-500 text-center'>
       {/* Display Creation Date */}
       <div className='border-r-2 p-3'>
         <div>Creation Date</div>
@@ -357,213 +357,208 @@ const id=state.leadId;
 <div>Loading...</div>
 )}
 
-
-
-
-
-
-  <div>
-
-    
-    {/* Display other details as needed */}
-
+<div className="p-6 bg-gradient-to-br  from-green-50 to-teal-100 shadow-xl rounded-xl">
+  <div className="mb-6 text-teal-800 font-bold text-2xl flex justify-between items-center">
+    <span>Packages</span>
    
+  </div>
 
-
-      <div className='flex flex-col space-y-20 m-10 '>
-        <div>
-          <div class="text-[#3fa277] p-2 font-bold text-xl">Packages</div>
-
-          <table class="w-full border-collapse border border-gray-300">
-            <thead>
-              <tr class="bg-[#d5f7e8]">
-                <th class="w-1/4 p-2 border">Package ID</th>
-                <th class="w-1/4 p-2 border">Package Name</th>
-                <th class="w-1/4 p-2 border">Description</th>
-                <th class="w-1/4 p-2 border">Price</th>
-
-              </tr>
-            </thead>
-            <tbody>
-              {packages.map((packageItem) => (
-                <tr key={packageItem.id}>
-                  <td className="border border-slate-400">{packageItem.id}</td>
-                  <td className="w-1/4 p-2 border">
-                    {editingId === packageItem.id ? (
-                      <input
-                        type="text"
-                        value={editedName}
-                        onChange={(e) => setEditedName(e.target.value)}
-                      />
-                    ) : (
-                      packageItem.name
-                    )}
-                  </td>
-                  <td className="w-1/4 p-2 border">
-                    {editingId === packageItem.id ? (
-                      <textarea
-                        value={editedDescription}
-                        onChange={(e) => setEditedDescription(e.target.value)}
-                      />
-                    ) : (
-                      packageItem.description
-                    )}
-                  </td>
-                  <td className="w-1/4 p-2 border">
-                    {editingId === packageItem.id ? (
-                      <input
-                        type="number"
-                        value={editedPrice}
-                        onChange={(e) => setEditedPrice(e.target.value)}
-                      />
-                    ) : (
-                      packageItem.price
-                    )}
-                  </td>
-                  <td>
-                    {editingId === packageItem.id ? (
-                      <button onClick={handleSaveClick}>Save</button>
-                    ) : (
-                      <button onClick={() => handleEditClick(packageItem.id, packageItem.name, packageItem.description, packageItem.price)}>
-                        <FaEdit color='#3fa277' size={'20px'} />
-                      </button>
-                    )}
-                  </td>
-
-                  <th onClick={() => deletePackage(packageItem.id)}>
-                    <RiDeleteBin6Line color='#3fa277' size={'20px'} />
-                  </th>
-                </tr>
-              ))}
-              {addPackage && (
-                <tr>
-                  <td className="border border-slate-400">{newPackage.id}</td>
-                  <td className="border border-slate-400">
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Package Name"
-                      value={newPackage.name}
-                      onChange={(e) => handleInputChange(e, 'package')}
-                      className="p-2 border mr-2"
-                    />
-                  </td>
-                  <td className="border border-slate-400">
-                    <input
-                      type="text"
-                      name="description"
-                      placeholder="Description"
-                      value={newPackage.description}
-                      onChange={(e) => handleInputChange(e, 'package')}
-                      className="p-2 border mr-2"
-                    />
-                  </td>
-                  <td className="border border-slate-400">
-                    <input
-                      type="text"
-                      name="price"
-                      placeholder="Price"
-                      value={newPackage.price}
-                      onChange={(e) => handleInputChange(e, 'package')}
-                      className="p-2 border mr-2"
-                    />
-                  </td>
-                </tr>
+  <div className="overflow-x-auto rounded-lg">
+    <table className="w-full text-sm text-left text-gray-700 bg-white rounded-lg overflow-hidden">
+      <thead className="text-xs text-gray-700 uppercase bg-teal-300">
+        <tr>
+          <th className="py-3 px-6">Package ID</th>
+          <th className="py-3 px-6">Package Name</th>
+          <th className="py-3 px-6">Description</th>
+          <th className="py-3 px-6">Price</th>
+          <th className="py-3 px-6">Actions</th>
+          <th className="py-3 px-6">Delete</th>
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-gray-200">
+        {packages.map((packageItem) => (
+          <tr key={packageItem.id} className="hover:bg-teal-50 transition duration-150 ease-in-out">
+            <td className="py-4 px-6">{packageItem.id}</td>
+            <td className="py-4 px-6">
+              {editingId === packageItem.id ? (
+                <input
+                  type="text"
+                  value={editedName}
+                  onChange={(e) => setEditedName(e.target.value)}
+                  className="input input-bordered w-full rounded"
+                />
+              ) : (
+                packageItem.name
               )}
-            </tbody>
-          </table>
-          <div className="mt-4">
-            {!addPackage && (
-              <button onClick={() => setAddPackage(true)} className="bg-[#3fa277] text-white p-2 rounded">
-                Add New Package
+            </td>
+            <td className="py-4 px-6">
+              {editingId === packageItem.id ? (
+                <textarea
+                  value={editedDescription}
+                  onChange={(e) => setEditedDescription(e.target.value)}
+                  className="textarea textarea-bordered w-full rounded"
+                />
+              ) : (
+                packageItem.description
+              )}
+            </td>
+            <td className="py-4 px-6">
+              {editingId === packageItem.id ? (
+                <input
+                  type="number"
+                  value={editedPrice}
+                  onChange={(e) => setEditedPrice(e.target.value)}
+                  className="input input-bordered w-full rounded"
+                />
+              ) : (
+                packageItem.price
+              )}
+            </td>
+            <td className="py-4 px-6">
+              {editingId === packageItem.id ? (
+                <button
+                  onClick={handleSaveClick}
+                  className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-green-600 hover:bg-green-700 text-white rounded shadow hover:shadow-lg transition duration-150 ease-in-out"
+                >
+                  Save
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleEditClick(packageItem.id, packageItem.name, packageItem.description, packageItem.price)}
+                  className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-blue-500 hover:bg-blue-600 text-white rounded shadow hover:shadow-lg transition duration-150 ease-in-out"
+                >
+                  <FaEdit size="16px" />
+                </button>
+              )}
+            </td>
+            <td className="py-4 px-6">
+              <button
+                onClick={() => deletePackage(packageItem.id)}
+                className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-red-600 hover:bg-red-700 text-white rounded shadow hover:shadow-lg transition duration-150 ease-in-out"
+              >
+                <RiDeleteBin6Line size="16px" />
               </button>
-            )}
-            {addPackage && (
-              <button onClick={handleAddPackage} className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
-                Save Package
-              </button>
-            )}
-          </div>
-        </div>
-
-
-        <div>
-          <div class="text-[#3fa277] p-2 font-bold text-xl">Action Logs</div>
-
-          <table class="w-full border-collapse border border-gray-300">
-            <thead>
-              <tr class="bg-[#d5f7e8]">
-                <th class="w-1/4 p-2 border">Action ID</th>
-                <th class="w-1/4 p-2 border">Action Date</th>
-                <th class="w-1/4 p-2 border">Note</th>
-              </tr>
-            </thead>
-            <tbody>
-              {activityLogs.map((log) => (
-                <tr key={log.id}>
-                  <td className="border border-slate-400">{log.id}</td>
-                  <td className="w-1/4 p-2 border">
-                    {editingLogId === log.id ? (
-                      <input
-                        type="date"
-                        value={editedLog.date}
-                        onChange={(e) =>
-                          setEditedLog({ ...editedLog, date: e.target.value })
-                        }
-                      />
-                    ) : (
-                      log.action_date
-                    )}
-                  </td>
-                  <td className="w-1/4 p-2 border">
-                    {editingLogId === log.id ? (
-                      <textarea
-                        value={editedLog.notes}
-                        onChange={(e) =>
-                          setEditedLog({ ...editedLog, notes: e.target.value })
-                        }
-                      />
-                    ) : (
-                      log.notes
-                    )}
-                  </td>
-                  <td>
-                    {editingLogId === log.id ? (
-                      <button onClick={handleSaveEdit}>Save</button>
-                    ) : (
-                      <button
-                        onClick={() => handleEditClickAction(log.id, log.action_date, log.notes)}
-                      >
-                        <FaEdit color="#3fa277" size={'20px'} />
-                      </button>
-                    )}
-                  </td>
-                  <td onClick={() => deleteAction(log.id)}>
-                    <RiDeleteBin6Line color="#3fa277" size={'20px'} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="mt-4">
-            {!addActivityLog && (
-              <button onClick={() => setAddActivityLog(true)} className="bg-[#3fa277] text-white p-2 rounded">
-                Add New Activity Log
-              </button>
-            )}
-            {addActivityLog && (
-              <button onClick={handleAddActivityLog} className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
-                Save Activity Log
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-
-
-
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+   
+  </div>
+  <div className='mt-4 flex justify-end'>
+  {!addPackage ? (
+      <button
+        onClick={() => setAddPackage(true)}
+        className="btn bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-150 ease-in-out transform hover:-translate-y-1 shadow"
+      >
+        Add New Package
+      </button>
+    ) : (
+      <button
+        onClick={handleAddPackage}
+        className="btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-150 ease-in-out transform hover:-translate-y-1 shadow"
+      >
+        Save Package
+      </button>
+    )}
     </div>
-    </div>
+  </div>
+
+
+
+  <div className="p-6 bg-gradient-to-br bg-teal-100 shadow-xl rounded-xl">
+  <div className="mb-6 text-teal-800 font-bold text-2xl">Action Logs</div>
+
+  <div className="overflow-x-auto rounded-lg">
+    <table className="w-full text-sm text-left text-gray-700 bg-white rounded-lg overflow-hidden">
+      <thead className="text-xs text-gray-700 uppercase bg-teal-300">
+        <tr>
+          <th className="py-3 px-6">Action ID</th>
+          <th className="py-3 px-6">Action Date</th>
+          <th className="py-3 px-6">Note</th>
+          <th className="py-3 px-6">Edit</th>
+          <th className="py-3 px-6">Delete</th>
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-gray-200">
+        {activityLogs.map((log) => (
+          <tr key={log.id} className="hover:bg-teal-50 transition duration-150 ease-in-out">
+            <td className="py-4 px-6">{log.id}</td>
+            <td className="py-4 px-6">
+              {editingLogId === log.id ? (
+                <input
+                  type="date"
+                  value={editedLog.date}
+                  onChange={(e) => setEditedLog({ ...editedLog, date: e.target.value })}
+                  className="input input-bordered w-full rounded"
+                />
+              ) : (
+                log.action_date
+              )}
+            </td>
+            <td className="py-4 px-6">
+              {editingLogId === log.id ? (
+                <textarea
+                  value={editedLog.notes}
+                  onChange={(e) => setEditedLog({ ...editedLog, notes: e.target.value })}
+                  className="textarea textarea-bordered w-full rounded"
+                />
+              ) : (
+                log.notes
+              )}
+            </td>
+            <td className="py-4 px-6">
+              {editingLogId === log.id ? (
+                <button
+                  onClick={handleSaveEdit}
+                  className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-green-600 hover:bg-green-700 text-white rounded shadow hover:shadow-lg transition duration-150 ease-in-out"
+                >
+                  Save
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleEditClickAction(log.id, log.action_date, log.notes)}
+                  className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-blue-500 hover:bg-blue-600 text-white rounded shadow hover:shadow-lg transition duration-150 ease-in-out"
+                >
+                  <FaEdit size="16px" />
+                </button>
+              )}
+            </td>
+            <td className="py-4 px-6">
+              <button
+                onClick={() => deleteAction(log.id)}
+                className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-red-600 hover:bg-red-700 text-white rounded shadow hover:shadow-lg transition duration-150 ease-in-out"
+              >
+                <RiDeleteBin6Line size="16px" />
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div className="mt-4 flex justify-end">
+    {!addActivityLog ? (
+      <button
+        onClick={() => setAddActivityLog(true)}
+        className="btn bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-150 ease-in-out transform hover:-translate-y-1 shadow"
+      >
+        Add New Activity Log
+      </button>
+    ) : (
+      <button
+        onClick={handleAddActivityLog}
+        className="btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-150 ease-in-out transform hover:-translate-y-1 shadow"
+      >
+        Save Activity Log
+      </button>
+    )}
+  </div>
+</div>
+</div>
+
+
 
   )
 }
