@@ -7,6 +7,7 @@ import SignUp from './components/SignUp';
 import Home from './components/Home';
 import LeadInformation from './components/LeadInformation';
 import NewLead from './components/NewLead';
+import Calendar from './components/Calendar';
 
 function App() {
   
@@ -23,6 +24,7 @@ function App() {
           <Route path='Home' element={<Home />}/>
           <Route path='Home/LeadInformation' element={<LeadInformation />}/>
           <Route path='Home/NewLead' element={<NewLead />}/>
+          <Route path='Home/Calendar' element={<Calendar />}/>
           
         
           

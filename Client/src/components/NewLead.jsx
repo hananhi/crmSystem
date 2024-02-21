@@ -33,7 +33,7 @@ export default function NewLead() {
 
     try {
       // Attempt to POST the leadData to a server endpoint
-      const response = await fetch('http://localhost:4000/leads', {
+      const response = await fetch('https://crm2-bw3d.onrender.com/leads', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
