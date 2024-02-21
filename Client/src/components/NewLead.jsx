@@ -67,7 +67,7 @@ export default function NewLead() {
     <div>
 
       <div className="max-w-xl mx-auto  mt-8 p-4 border bg-white rounded shadow-md">
-        <h2 className="text-xl font-semibold mb-4 text-[#3fa277] text-center">Create New Lead</h2>
+        <h2 className="text-xl font-semibold mb-4 text-teal-500 text-center">Create New Lead</h2>
         <form onSubmit={handleSubmit} className='  flex flex-wrap space-x-4 p-2'>
           {/* Lead Name */}
           <div className="mb-4 ml-4">
@@ -118,7 +118,7 @@ export default function NewLead() {
           </div>
 
           {/* Submit Button */}
-          <button type="submit" className="bg-[#3fa277] text-white p-2 rounded hover:bg-[#3fa277] "  disabled={isSubmitting}> {isSubmitting ? 'Adding new Lead...' : 'Create'}</button>
+          <button type="submit" className="bg-teal-500 text-white p-2 rounded hover:bg-[#3fa277]" disabled={isSubmitting}> {isSubmitting ? 'Adding new Lead...' : 'Create'}</button>
 
         
         </form>

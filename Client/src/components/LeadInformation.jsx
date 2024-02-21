@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaEdit } from "react-icons/fa";
+import { FaVideo } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Header from './Header';
 import { useLocation } from "react-router-dom";
@@ -331,6 +332,11 @@ const id=state.leadId;
       {/* Display Opportunity Name */}
       <div>Opportunity Name: {Data[0].name}</div>
     </div>
+    <div className='flex flex-col items-center justify-center border-2 border-teal-500 px-3 py-2 mb-8 rounded'>
+  <FaVideo className='text-teal-500 text-3xl' /> {/* Adjust text-2xl as needed for size */}
+  <div className=' text-teal-500 '>New Meeting</div>
+</div>
+
 
     <div className='flex justify-evenly w-[30%] text-teal-500 text-center'>
       {/* Display Creation Date */}
