@@ -25,7 +25,7 @@ export default function Home() {
   const fetchData = async () => {
 
     try {
-      const response = await fetch('https://crm2-bw3d.onrender.com/leads/');
+      const response = await fetch('https://crm3-vj7r.onrender.com/leads/');
       const data = await response.json();
       console.log(data);
 
