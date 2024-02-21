@@ -43,6 +43,7 @@ export default function Login() {
       alert("Please enter your email address to reset your password.");
       return;
     }
+    console.log(email);
     sendPasswordResetEmail(auth, email)
       .then(() => {
         alert("Password reset email sent. Please check your inbox.");
@@ -65,9 +66,9 @@ export default function Login() {
         <div className="flex justify-center items-center">
           <img src="https://www.uctoday.com/wp-content/uploads/2018/10/TelcoSwitch-CRM.png" className="w-60 h-60" alt="TelcoSwitch CRM" />
         </div>
-        <h1 className="text-center text-3xl text-[#3fa277] font-bold">Welcome</h1>
+        <h1 className="text-center text-3xl text-teal-500 font-bold">Welcome</h1>
         <div className="flex flex-col space-y-2">
-          <label className="font-light text-[#3fa277]" htmlFor="email">
+          <label className="font-light text-teal-500" htmlFor="email">
             Email
           </label>
           <input
@@ -96,17 +97,19 @@ export default function Login() {
         </div>
 
         {notFound && <div className="text-[#ff0000]">Email or Password Incorrect</div>}
-        <a onClick={handlePasswordReset}>Forgot Password?</a>
 
+<div className='mt-3'>
+        <a onClick={handlePasswordReset} className='hover-outline font-bold text-teal-500'>Forgot Password?</a>
+        </div>
         <button
-          className="w-full px-10 py-2 bg-[#3fa277] text-white rounded-md hover:bg-blue-500 hover:drop-shadow-md duration-300 ease-in"
+          className="w-full px-10 py-2 bg-teal-500 text-white rounded-md hover:bg-blue-500 hover:drop-shadow-md duration-300 ease-in"
           type="submit"
         >
           Log In
         </button>
 
         <p className="text-right" onClick={goToSignUp}>
-          <a className="text-[#3fa277] text-sm font-light hover:underline" href="/SignUp">
+          <a className="text-teal-500 text-sm font-light hover:underline" href="/SignUp">
             Don't have an Account? <span className="font-bold">Register Now</span>
           </a>
         </p>

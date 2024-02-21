@@ -4,6 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { GoPin } from "react-icons/go";
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import Calendar from './Calendar';
 
 //home component
 export default function Home() {
@@ -24,7 +25,7 @@ export default function Home() {
   const fetchData = async () => {
 
     try {
-      const response = await fetch('http://localhost:4000/leads/');
+      const response = await fetch('https://crm2-bw3d.onrender.com/leads/');
       const data = await response.json();
       console.log(data);
 
@@ -67,19 +68,27 @@ export default function Home() {
     navigate('LeadInformation', { state: { leadId } })
   };
 
+  function toCalendar() {
+
+    navigate('Calendar');
+  }
+
   return (
     <div className=' bg-gray-50'>
 <Header />
-<div className='flex items-center space-x-2 p-2 rounded-lg'>
+<div className='flex items-center space-x-2 p-2 rounded-lg justify-evenly w-[500px]'>
 <button className="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-teal-200 ml-2" onClick={newLeadPage}>
               <FaPlus color="#2f855a" size="20px" />
               <div className="text-teal-800 font-bold">New</div>
             </button>
              
-             <div className='text-teal-800 font-bold mt-6'>
+             <div className='text-teal-800 font-bold '>
              <div >Number of Leads <span className='bg-teal-800 text-white px-2 rounded-md'>{numberOfLeads}</span></div>
              </div>
+
+             <div className='text-teal-800 font-bold space-x-2 p-2 rounded-lg cursor-pointer hover:bg-teal-200 ml-2' onClick={toCalendar}>Calendar</div>
              </div>
+            
 <div className='w-full'>
     <div className="min-h-screen bg-gray-50 py-6 flex flex-col justify-center sm:py-12">
       
