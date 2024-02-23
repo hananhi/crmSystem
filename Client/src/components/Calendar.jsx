@@ -10,7 +10,7 @@ export default function Calendar() {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const response = await fetch('http://localhost:4000/meetings');
+      const response = await fetch('https://crm3-vj7r.onrender.com/meetings');
     
       const data = await response.json();
 console.log(data);
