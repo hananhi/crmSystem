@@ -61,13 +61,19 @@ export default function Login() {
 
   // The component renders a form for the user to log in
   return (
-    <div className="w-screen h-screen flex justify-center items-center bg-white">
-      <form className="bg-white rounded-xl drop-shadow-lg space-y-5 py-20 px-5" action="" onSubmit={(e) => handleLogin(e)}>
+    
+   
+      <div className='w-full h-[400px]'>
+    <div className="min-h-screen bg-gray-50 py-3 flex flex-col justify-center sm:py-6">
+      
+      <div className="relative py-2 sm:mx-auto ">
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-green-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-lg"></div>
+      <form className="bg-white rounded-xl drop-shadow-lg space-y-3 py-10 px-4" action="" onSubmit={(e) => handleLogin(e)}>
         <div className="flex justify-center items-center">
-          <img src="https://www.uctoday.com/wp-content/uploads/2018/10/TelcoSwitch-CRM.png" className="w-60 h-60" alt="TelcoSwitch CRM" />
+          <img src="https://www.expandable.com/assets/img/crm.png" className="w-60 h-60" alt="TelcoSwitch CRM" />
         </div>
         <h1 className="text-center text-3xl text-teal-500 font-bold">Welcome</h1>
-        <div className="flex flex-col space-y-2">
+        <div className="flex flex-col space-y-1">
           <label className="font-light text-teal-500" htmlFor="email">
             Email
           </label>
@@ -81,7 +87,7 @@ export default function Login() {
           />
         </div>
         <div className="flex flex-col space-y-2">
-          <label className="font-light text-[#3fa277]" htmlFor="password">
+          <label className="font-light text-teal-500" htmlFor="password">
             Password
           </label>
           <input
@@ -115,5 +121,8 @@ export default function Login() {
         </p>
       </form>
     </div>
+    </div>
+    </div>
+  
   );
 }
