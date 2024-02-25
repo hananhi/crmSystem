@@ -20,6 +20,7 @@ export default function LeadInformation() {
   const [editedName, setEditedName] = useState('');
   const [editedDescription, setEditedDescription] = useState('');
   const [editedPrice, setEditedPrice] = useState('');
+  const [showForm, setShowForm] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -320,7 +321,48 @@ const id=state.leadId;
     }
   };
 
-  console.log('@sos',Data);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+   
+    
+    // Extract values from the form
+    const { title, startDateTime, endDateTime, duration, customerNumber } = event.target.elements;
+  
+    
+    // Prepare formData
+    const formData = {
+      id: uuidv4(),
+      leadId:state.leadId,
+      title: title.value,
+      startDateTime: startDateTime.value,
+      endDateTime: endDateTime.value,
+      duration: duration.value,
+    
+      number: customerNumber.value,
+      
+    };
+  
+    try {
+      const response = await fetch(`http://localhost:4000/meetings`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (!response.ok) throw new Error('Network response was not ok');
+      // Handle successful response
+
+      setTimeout(() => {
+        setShowForm(false);
+      }, 2000);
+
+    } catch (error) {
+      console.error("Failed to submit form:", error);
+    }
+  };
+  
   return (
     <div>
       <Header />
@@ -332,10 +374,52 @@ const id=state.leadId;
       {/* Display Opportunity Name */}
       <div>Opportunity Name: {Data[0].name}</div>
     </div>
-    <div className='flex flex-col items-center justify-center border-2 border-teal-500 px-3 py-2 mb-8 rounded'>
+    <div className='flex flex-col items-center justify-center border-2 border-teal-500 px-3 py-2 mb-8 rounded' onClick={() => setShowForm(true)}>
   <FaVideo className='text-teal-500 text-3xl' /> {/* Adjust text-2xl as needed for size */}
   <div className=' text-teal-500 '>New Meeting</div>
 </div>
+
+{showForm && (
+  <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <form className="bg-white rounded-lg p-8 m-4 max-w-lg w-full space-y-4" onSubmit={handleSubmit}>
+      <div className="text-lg font-semibold text-center">Add New Meeting</div>
+      
+      <div>
+        <label htmlFor="title" className="block text-sm font-medium text-gray-700">Meeting Title</label>
+        <input type="text" name="title" placeholder="Meeting Title" required 
+               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500"/>
+      </div>
+      
+      <div>
+        <label htmlFor="startDateTime" className="block text-sm font-medium text-gray-700">Start Date & Time:</label>
+        <input type="datetime-local" name="startDateTime" required 
+               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"/>
+      </div>
+      
+      <div>
+        <label htmlFor="endDateTime" className="block text-sm font-medium text-gray-700">End Date & Time:</label>
+        <input type="datetime-local" name="endDateTime" required 
+               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"/>
+      </div>
+      
+      <div>
+        <label htmlFor="duration" className="block text-sm font-medium text-gray-700">Duration (minutes):</label>
+        <input type="number" name="duration" placeholder="Duration in minutes" 
+               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500"/>
+      </div>
+
+<div>
+  <label htmlFor="customerNumber" className="block text-sm font-medium text-gray-700">customer Number:</label>
+  <input type="text" name="customerNumber" placeholder="Enter number" 
+         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"/>
+</div>
+      
+      <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+        Submit
+      </button>
+    </form>
+  </div>
+)}
 
 
     <div className='flex justify-evenly w-[30%] text-teal-500 text-center'>
