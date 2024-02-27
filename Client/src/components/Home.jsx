@@ -4,7 +4,8 @@ import { FaPlus } from "react-icons/fa";
 import { GoPin } from "react-icons/go";
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import Calendar from './Calendar';
+
+import { FaSearch } from "react-icons/fa";
 
 //home component
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
   const [leadsArray, setLeadsArray] = useState([]); //array of the leads 
   const [upcoming, setUpcoming] = useState([]);
   const [numberOfLeads,setNumberOfLeads]=useState();
+  const [search,setSearch]=useState('');
   const navigate = useNavigate();
  
 
@@ -31,6 +33,7 @@ export default function Home() {
 
       setLeadsArray(data);
       setNumberOfLeads(data.length);
+      setAllLeads(data);
       
 
       const upcomingMeeting = data.filter(e => {
@@ -72,11 +75,56 @@ export default function Home() {
 
     navigate('Calendar');
   }
+/*
+async function searchCustomer(){
+  const searchValue = search.trim(); // Trim the search input
+
+  try {
+    const response = await fetch('https://crm3-vj7r.onrender.com/leads/');
+    const data = await response.json();
+
+    // If the search input is empty or only contains whitespace, show all data
+    if (!searchValue) {
+      setLeadsArray(data);
+    } else {
+      // Otherwise, filter the leads array based on the search input
+      const filteredData = data.filter(lead =>
+        lead.customer_account.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      setLeadsArray(filteredData);
+    }
+  } catch (error) {
+    console.error('Error fetching leads:', error);
+    // Handle the error appropriately
+  }
+
+
+}
+*/
+
+const [allLeads, setAllLeads] = useState([]);
+
+useEffect(() => {
+  const handler = setTimeout(() => {
+    const searchValue = search.trim().toLowerCase();
+    if (searchValue) {
+      const filteredData = allLeads.filter(lead =>
+        lead.customer_account.toLowerCase().includes(searchValue)
+      );
+      setLeadsArray(filteredData);
+    } else {
+      setLeadsArray(allLeads); // If search is empty, reset to all leads
+    }
+  }, 300); // 300 ms delay
+
+  return () => clearTimeout(handler); // Cleanup timeout on effect cleanup
+}, [search, allLeads]);
+
 
   return (
     <div className=' bg-gray-50'>
 <Header />
-<div className='flex items-center space-x-2 p-2 rounded-lg justify-evenly w-[500px]'>
+<div className='flex items-center space-x-2 p-2 rounded-lg justify-evenly w-[1000px]'>
 <button className="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-teal-200 ml-2" onClick={newLeadPage}>
               <FaPlus color="#2f855a" size="20px" />
               <div className="text-teal-800 font-bold">New</div>
@@ -87,6 +135,12 @@ export default function Home() {
              </div>
 
              <div className='text-teal-800 font-bold space-x-2 p-2 rounded-lg cursor-pointer hover:bg-teal-200 ml-2' onClick={toCalendar}>Calendar</div>
+
+             <div class="flex">
+  <input type="text" id="searchInput" placeholder="Search by customer name..."  onChange={(e) => setSearch(e.target.value)}
+         class="flex-1 p-2 rounded border-2 border-teal-800 focus:outline-none focus:ring-1 focus:ring-teal-500 w-[400px]"/>
+
+</div>
              </div>
             
 <div className='w-full'>

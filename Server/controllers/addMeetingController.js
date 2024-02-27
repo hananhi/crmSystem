@@ -3,14 +3,15 @@ import pool from '../server.js';
 export const addMeetings =async (req,res,next)=>{
 
     try {
-        const {id, leadId, title, startDateTime, endDateTime, duration, number } = req.body;
+        console.log(req.body);
+        const {id, leadId, title, startDateTime, duration ,endDateTime} = req.body;
         
       
         console.log('Received meeting data with leadId:', req.body);
     
-        const insertQuery = 'INSERT INTO meetings (id,lead_id, title, start, end, duration, number) VALUES (?, ?, ?, ?, ?, ?,?)';
+        const insertQuery = 'INSERT INTO meetings (id,lead_id, title, start, duration , end) VALUES (?, ?, ?, ?, ?, ?)';
         
-        pool.query(insertQuery, [id,leadId, title, startDateTime, endDateTime, duration, number], (insertError, insertResults, insertFields) => {
+        pool.query(insertQuery, [id,leadId, title, startDateTime,  duration , endDateTime,], (insertError, insertResults, insertFields) => {
             if (insertError) {
                 console.error('Error adding meeting:', insertError);
                 res.status(500).send('Error adding meeting');
