@@ -1,8 +1,8 @@
 import express from 'express'
-import { getLeads,addLead ,getLead } from '../controllers/leadsController.js';
+import { getLeads,addLead ,getLead ,updateLead} from '../controllers/leadsController.js';
 import { deletePackage ,editPackage,addPackage,getPackages } from '../controllers/packageController.js';
 import { getActionLogs,deleteAction,editAction ,addActionLog} from '../controllers/actionController.js';
-import { addMeetings } from '../controllers/addMeetingController.js';
+
 
 const router=express.Router() ;
 
@@ -11,7 +11,7 @@ router.get('/',getLeads);
 router.post('/',addLead);
 router.get('/:id',getLead);
 
-
+router.post('/:id/',updateLead);
 
 router.get('/:id/packages',getPackages);
 
@@ -24,7 +24,7 @@ router.get('/:id/packages',getPackages);
  router.patch('/:id/actionLogs/:actionId',editAction);
  router.post('/:id/actionLogs',addActionLog);
  
- router.post('/:id/meetings',addMeetings);
+ 
 
 
 export default router ;

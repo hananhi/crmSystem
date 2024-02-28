@@ -21,8 +21,24 @@ export default function Home() {
   //use effect to perform fetch to call the leads 
   useEffect(() => {
     fetchData();
-    
+    fetchFollowUps();
   }, [])
+
+  const fetchFollowUps = async () => {
+
+    try{
+
+      const response = await fetch('http://localhost:4000/followUps');
+      const data = await response.json();
+      console.log(data);
+
+
+    }
+    catch (error){
+
+ console.error('Error fetching followUps:', error);
+    }
+  }
 
   const fetchData = async () => {
 
@@ -56,8 +72,6 @@ export default function Home() {
   };
 
 
-
-
 // go to NewLead page when the user click on New botton
   function newLeadPage() {
 
@@ -75,32 +89,7 @@ export default function Home() {
 
     navigate('Calendar');
   }
-/*
-async function searchCustomer(){
-  const searchValue = search.trim(); // Trim the search input
 
-  try {
-    const response = await fetch('https://crm3-vj7r.onrender.com/leads/');
-    const data = await response.json();
-
-    // If the search input is empty or only contains whitespace, show all data
-    if (!searchValue) {
-      setLeadsArray(data);
-    } else {
-      // Otherwise, filter the leads array based on the search input
-      const filteredData = data.filter(lead =>
-        lead.customer_account.toLowerCase().includes(searchValue.toLowerCase())
-      );
-      setLeadsArray(filteredData);
-    }
-  } catch (error) {
-    console.error('Error fetching leads:', error);
-    // Handle the error appropriately
-  }
-
-
-}
-*/
 
 const [allLeads, setAllLeads] = useState([]);
 
@@ -119,6 +108,27 @@ useEffect(() => {
 
   return () => clearTimeout(handler); // Cleanup timeout on effect cleanup
 }, [search, allLeads]);
+
+const handleStatusChange = async(e, leadId) => {
+  const newStatus = e.target.value;
+ 
+  try {
+    const response = await fetch(`http://localhost:4000/leads/${leadId}/${newStatus}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) throw new Error('Network response was not ok');
+    // Handle successful response
+ 
+    console.log('success');
+
+  } catch (error) {
+    console.error("Failed to submit form:", error);
+  }
+};
 
 
   return (
@@ -182,7 +192,11 @@ useEffect(() => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.email}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.phone}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <select className="form-select block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
+
+                      <select className="form-select block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50" 
+                      onClick={(e) => e.stopPropagation()}
+                      onChange={(e) => handleStatusChange(e, lead.id)}>
+                        
                         <option value="new" selected={lead.status === 'new'}>New</option>
                         <option value="quote_given" selected={lead.status === 'quote given'}>Quote Given</option>
                         <option value="advance_paid" selected={lead.status === 'advance paid'}>Advance Paid</option>

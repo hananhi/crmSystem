@@ -6,6 +6,7 @@ import cors from 'cors';
 import leadsRoutes from  './routes/leadsRoutes.js'
 import customerRoutes from './routes/customerRoutes.js'
 import meetingsRoutes from './routes/meetingsRoutes.js'
+import followRoutes from './routes/followRoutes.js'
 //import { scheduleReminders } from './controllers/meetingController.js';
 //import whatsappClient from './controllers/whatsAppclientController.js';
 
@@ -50,6 +51,7 @@ app.use(errorhandler); //middileware for error
 app.use('/leads',leadsRoutes); //middileware for leads
 app.use('/customers',customerRoutes) //middileware for user
 app.use('/meetings',meetingsRoutes);
+app.use('/followUps',followRoutes);
 const PORT =process.env.PORT;
 
 app.listen(PORT, () => {

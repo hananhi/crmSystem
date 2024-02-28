@@ -377,6 +377,52 @@ useEffect(() => {
       console.error("Failed to submit form:", error);
     }
   };
+
+  const handleSubmitFollow= async (event)=>{
+ 
+    event.preventDefault();
+  
+
+    const formElements = event.target.elements;  // Get the form elements
+
+    // Extract values from form elements
+    const followUpTime = formElements.followUpTime.value; // Gets the value of the selected radio button
+    const manualDateTime = formElements.DateTime ? formElements.DateTime.value : null; // Gets the manual DateTime if set
+
+    // Prepare the data object based on whether a manual time has been set
+    const data = {
+      leadId:state.leadId,
+        followUpTime: followUpTime,
+        DateTime: manualDateTime
+    };
+
+    try {
+        // Replace with your actual endpoint URL
+        const response = await fetch('http://localhost:4000/followUps', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        console.log('Follow-up scheduled successfully:', result);
+
+       
+        setShowFormFollow(false);
+        setManualTime(false); // Assuming you have a state for this
+    } catch (error) {
+        console.error('Failed to submit follow-up:', error);
+        // Here you can handle errors and give feedback to the user
+    }
+
+    
+  }
   
   return (
     <div>
@@ -403,7 +449,7 @@ useEffect(() => {
   {showFormFollow && (
   <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50 ">
 
-    <form className="bg-white rounded-lg p-8 m-4 max-w-lg w-full space-y-4 relative" onSubmit={handleSubmit}>
+    <form className="bg-white rounded-lg p-8 m-4 max-w-lg w-full space-y-4 relative" onSubmit={handleSubmitFollow}>
     <IoCloseCircle  color='red' className='absolute top-0 right-0 mt-4 mr-4 cursor-pointer size-6' onClick={() => {
     setShowFormFollow(false);
     setManualTime(false);
@@ -432,7 +478,9 @@ useEffect(() => {
       {showManualTime &&  <div>
         <label htmlFor="DateTime" className="block text-sm font-medium text-gray-700"> Date & Time:</label>
         <input type="datetime-local" name="DateTime" required 
-               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"/>
+               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+               value={startDateTime}
+               onChange={(e) => setStartDateTime(e.target.value)}/>
       </div>}
 
       <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">

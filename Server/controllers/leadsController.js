@@ -14,9 +14,6 @@ export const getLead = (req, res, next) => {
                     return;
                 }
     
-                // Log the retrieved results
-                //console.log(results);
-    
                 // Send the results as a JSON response
                 res.json(results);
             });
@@ -26,6 +23,28 @@ export const getLead = (req, res, next) => {
         }
 };
 
+export const updateLead = (req, res, next) => {
+    try {
+        // Extract leadId from the request parameters
+        const { id ,status} = req.params;
+
+console.log(id,status);
+
+        // Use pool.query for executing the query
+        pool.query('UPDATE leads SET status = ? WHERE id = ?', [ status ,id], (error, results) => {
+
+            if (error) {
+                console.error('Error in getLead:', error);
+                next(error);
+                return;
+            }
+            res.json(results);
+        });
+    } catch (error) {
+        console.error('Error in getLead:', error);
+        next(error);
+    }
+};
 
 
 export const addLead =async (req,res,next)=>{
