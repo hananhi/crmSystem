@@ -1,4 +1,4 @@
-/*import pkg from 'whatsapp-web.js';
+import pkg from 'whatsapp-web.js';
 const { Client, LocalAuth } = pkg;
 import qrcode from 'qrcode-terminal';
 
@@ -43,4 +43,3 @@ whatsappClient.on('message', message => {
 whatsappClient.initialize();
 
 export default whatsappClient;
-*/
