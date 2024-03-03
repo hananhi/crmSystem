@@ -4,6 +4,8 @@ import { FaPlus } from "react-icons/fa";
 import { GoPin } from "react-icons/go";
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import * as XLSX from 'xlsx';
+
 
 import { FaSearch } from "react-icons/fa";
 
@@ -11,6 +13,7 @@ import { FaSearch } from "react-icons/fa";
 export default function Home() {
 
   const [leadsArray, setLeadsArray] = useState([]); //array of the leads 
+  const [followUps, setFollowUps] = useState([]); //array of the leads 
   const [upcoming, setUpcoming] = useState([]);
   const [numberOfLeads,setNumberOfLeads]=useState();
   const [search,setSearch]=useState('');
@@ -32,6 +35,8 @@ export default function Home() {
       const data = await response.json();
       console.log(data);
 
+ setFollowUps(data);
+      //const upcomingFollows=data.filter(follow=> current data (start time )<follow.scheduled_time < current time )
 
     }
     catch (error){
@@ -113,7 +118,7 @@ const handleStatusChange = async(e, leadId) => {
   const newStatus = e.target.value;
  
   try {
-    const response = await fetch(`http://localhost:4000/leads/${leadId}/${newStatus}`, {
+    const response = await fetch(`https://crm3-vj7r.onrender.com/leads/${leadId}/${newStatus}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -130,11 +135,70 @@ const handleStatusChange = async(e, leadId) => {
   }
 };
 
+const leadFields = ['name', 'phone', 'email', 'creation_date', 'last_modified', 'status', 'customer_account', 'meeting_datetime', 'send_reminder'];
+
+
+
+  function handleFileUpload(event ) {
+  const file = event.target.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const data = e.target.result;
+        const workbook = XLSX.read(data, { type: 'binary' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const parsedData = XLSX.utils.sheet_to_json(worksheet);
+        
+        console.log(parsedData);
+
+       
+        const transformedData = parsedData.map(row => ({
+          name: row['name'], 
+          email: row['email'],
+          status: row['status'] || 'new',
+          phone: row['phone'],
+          customer_account: row['customer_account'],
+          
+      }));
+
+      console.log(transformedData);
+
+      converExcel(transformedData)
+    };
+    reader.readAsBinaryString(file);
+}
+}
+
+
+const converExcel= async(transformedData)=>{
+  
+  try {
+    const response = await fetch(`http://localhost:4000/excel/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(transformedData)
+    });
+
+    if (!response.ok) throw new Error('Network response was not ok');
+    // Handle successful response
+ 
+    console.log('success');
+
+  } catch (error) {
+    console.error("Failed to submit form:", error);
+  }
+
+}
+
 
   return (
     <div className=' bg-gray-50'>
 <Header />
-<div className='flex items-center space-x-2 p-2 rounded-lg justify-evenly w-[1000px]'>
+<div className='flex items-center space-x-2 p-2 rounded-lg justify-evenly w-full'>
 <button className="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-teal-200 ml-2" onClick={newLeadPage}>
               <FaPlus color="#2f855a" size="20px" />
               <div className="text-teal-800 font-bold">New</div>
@@ -151,9 +215,12 @@ const handleStatusChange = async(e, leadId) => {
          class="flex-1 p-2 rounded border-2 border-teal-800 focus:outline-none focus:ring-1 focus:ring-teal-500 w-[400px]"/>
 
 </div>
+<div>
+<input type="file" accept=".xlsx, .xls" onChange={ (e)=>handleFileUpload(e)} />
+</div>
              </div>
             
-<div className='w-full'>
+<div className='w-full '>
     <div className="min-h-screen bg-gray-50 py-6 flex flex-col justify-center sm:py-12">
       
       <div className="relative py-3 sm:mx-auto ">
@@ -173,7 +240,7 @@ const handleStatusChange = async(e, leadId) => {
           </div>
 
           {/* Leads table */}
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto " style={{ maxHeight: '500px', overflowY: 'auto' }}>
             <table className="w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
@@ -212,6 +279,52 @@ const handleStatusChange = async(e, leadId) => {
         </div>
       </div>
     </div>
+    </div>
+
+    <div className="p-8 overflow-y-auto overflow-x-auto">
+      <h2 className="text-2xl font-bold mb-5 text-red-800">Follow Up Details</h2>
+      <div>
+        <table >
+          <thead className="bg-teal-500 text-white">
+            <tr>
+              
+             
+              <th scope="col" className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                Scheduled Time
+              </th>
+              <th scope="col" className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                FollowUp Type
+              </th>
+              <th scope="col" className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                Updated At
+              </th>
+              <th scope="col" className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                Customer Name 
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white">
+            {followUps.map((followUp) => (
+              <tr key={followUp.id} className="hover:bg-teal-100">
+              
+                <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                  {followUp.scheduled_time}
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                  {followUp.follow_up_type}
+                </td>
+              
+                <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                  {followUp.updated_at}
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                  {followUp.customer_name}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
     </div>
   )

@@ -42,7 +42,7 @@ export const getFollowUps =async (req,res,next)=>{
 
     try {
         // Use pool.query for executing the query
-        pool.query('SELECT * FROM followUps', (error, results, fields) => {
+        pool.query('SELECT followUps.*, leads.customer_account AS customer_name FROM followUps JOIN leads ON followUps.lead_id = leads.id', (error, results, fields) => {
             if (error) {
                 console.error('Error in getFollowUps:', error);
                 next(error);

@@ -398,7 +398,7 @@ useEffect(() => {
 
     try {
         // Replace with your actual endpoint URL
-        const response = await fetch('http://localhost:4000/followUps', {
+        const response = await fetch('https://crm3-vj7r.onrender.com/followUps', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
