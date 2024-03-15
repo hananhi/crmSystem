@@ -6,6 +6,7 @@
     "node-cron": "^3.0.3",
     "node-schedule": "^2.1.1",
     "nodemon": "^3.1.0",
+    "npm-run-all": "^4.1.5",
     "qrcode-terminal": "^0.12.0",
     "twilio": "^4.21.0",
     "whatsapp-web.js": "^1.23.0"
@@ -16,8 +17,5 @@
     "client": "cd Client && npm install && npm run dev",
     "build": "cd Client && npm install && npm run build",
     "start": "npm run dev"
-  },
-  "devDependencies": {
-    "npm-run-all": "^4.1.5"
   }
 }
