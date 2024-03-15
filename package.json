@@ -10,8 +10,9 @@
     "whatsapp-web.js": "^1.23.0"
   },
   "scripts": {
-    "build": "cd Client && npm run build",
-    "dev": "npm run build && nodemon ./Server/server.js",
-    "start": "npm run dev && node ./Server/server.js"
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm start",
+    "client": "cd client && npm run dev",
+    "start": "npm run dev"
   }
 }
