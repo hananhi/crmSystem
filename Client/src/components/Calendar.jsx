@@ -3,10 +3,14 @@ import Fullcalendar from"@fullcalendar/react"
  import dayGridPlugin from"@fullcalendar/daygrid"
  import timeGridPlugin from"@fullcalendar/timegrid"
  import interactionPlugin from"@fullcalendar/interaction"
+ import { IoCloseCircle } from "react-icons/io5";
 
 export default function Calendar() {
 
     const [events, setEvents] = useState([]);
+    const [updateMeeting, setUpdateMeeting]=useState(false);
+    const [meetingID,setMeetingId]=useState();
+    
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -19,6 +23,7 @@ console.log(data);
         title: meeting.title,
         start: meeting.start,
         end: meeting.end,
+        id:meeting.id,
         backgroundColor: '#ff9f89'
       }));
 
@@ -38,24 +43,84 @@ console.log(data);
         );
       };
 
+
+    function handleEventClick(clickInfo) {
+      const meetingId=clickInfo.event.id;
+      
+      setMeetingId(meetingId);
+      setUpdateMeeting(true);
+    }
+
+    function changetime() {
+
+    
+  }
+
+async function cancelMeeting() {
+
+  console.log('iam in cancel',meetingID);
+  
+  try {
+    const response = await fetch(`http://localhost:4000/meetings/${meetingID}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+     
+      console.log(response);
+      window.location.reload();
+      console.log('deleted successfully.');
+    } else {
+      console.error('Failed to delete data.');
+    }
+  } catch (error) {
+    console.error('Error deleting', error);
+  }
+
+  }
+
   return (
-    <div className='max-w-[90vw] ml-[70px] mt-[30px]' >
-        
-        <Fullcalendar  plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin]}
-        initialView={'timeGridWeek'}
+    <div className='w-full lg:max-w-[90vw] ml-0 lg:ml-[70px] mt-5 lg:mt-[30px]'>
+    <Fullcalendar
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        initialView='timeGridWeek'
         headerToolbar={{
             start: 'title',
-            center:'prev,next',
-            end:'dayGridMonth,timeGridWeek,timeGridDay',
-        } 
-        }
+            center: 'prev,next',
+            end: 'dayGridMonth,timeGridWeek,timeGridDay',
+        }}
         slotMinTime="08:00:00" // Calendar starts at 8am
         slotMaxTime="20:00:00"
-        height={'95vh'}
+        height='auto' // Adjust height for responsive design
+        contentHeight='auto'
+        aspectRatio={1.35} // Adjust according to needs, affects the width-to-height ratio
         events={events}
         eventContent={renderEventContent}
-       />
+        eventClick={handleEventClick}
+    />
 
+   { updateMeeting && <div>
+
+    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50 ">
+
+<form className="bg-white rounded-lg p-8 m-4 max-w-lg w-full space-y-4 relative">
+
+<IoCloseCircle  color='red' className='absolute top-0 right-0 mt-4 mr-4 cursor-pointer size-6' onClick={() => 
+    setUpdateMeeting(false)}/>
+  <div className="text-lg font-semibold text-center text-teal-500">Update Meeting </div> 
+<div className='flex justify-evenly'>
+
+<button className='text-teal-500 border border-teal-500 rounded-md font-bold p-1' onClick={changetime}>change time </button>
+<button type='button' className='border border-red-600 rounded-md text-red-600 font-bold p-1' onClick={cancelMeeting}>Cancel Meeting</button>
+</div>
+</form>
     </div>
-  )
+
+     </div>
 }
+</div>
+)
+   }

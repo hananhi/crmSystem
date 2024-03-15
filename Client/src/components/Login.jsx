@@ -74,11 +74,11 @@ export default function Login() {
         </div>
         <h1 className="text-center text-3xl text-teal-500 font-bold">Welcome</h1>
         <div className="flex flex-col space-y-1">
-          <label className="font-light text-teal-500" htmlFor="email">
+          <label className="font-light text-teal-500 " htmlFor="email">
             Email
           </label>
           <input
-            className="w-96 px-3 py-2 rounded-md border border-slate-400"
+            className="w-full px-3 py-2 rounded-md border border-slate-400 "
             type="email"
             placeholder="Your Email"
             value={email}
@@ -91,7 +91,7 @@ export default function Login() {
             Password
           </label>
           <input
-            className="w-96 px-3 py-2 rounded-md border border-slate-400"
+            className="w-96 px-3 py-2 rounded-md border border-slate-400 "
             type="password"
             placeholder="Your Password"
             name="password"

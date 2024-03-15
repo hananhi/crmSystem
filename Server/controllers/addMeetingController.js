@@ -28,3 +28,37 @@ export const addMeetings =async (req,res,next)=>{
       }
 
 }
+
+export const deleteMeetings =async (req,res,next)=>{
+
+  const meetingId = req.params.id;
+ 
+  console.log(meetingId);
+
+  try {
+  
+      // Use pool.query for executing the DELETE query
+      pool.query(
+          'DELETE FROM meetings WHERE id = ?',
+          [meetingId],
+          (error, results, fields) => {
+              if (error) {
+                  console.error('Error in delete meeting', error);
+                  // Respond with an error status
+                  res.status(500).json({ error: 'Internal Server Error' });
+                  return;
+              }
+
+            
+              console.log('meeting deleted successfully:', results);
+
+              // Send a JSON response indicating the success of the operation
+              res.status(204).send();
+          }
+      );
+  } catch (error) {
+      console.error('Error in deletePackage:', error);
+      next(error);
+  }
+}
+
