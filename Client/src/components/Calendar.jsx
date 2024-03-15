@@ -14,7 +14,7 @@ export default function Calendar() {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const response = await fetch('https://crm3-vj7r.onrender.com/meetings');
+      const response = await fetch('https://crmsystem-y80u.onrender.com/meetings');
     
       const data = await response.json();
 console.log(data);
@@ -61,7 +61,7 @@ async function cancelMeeting() {
   console.log('iam in cancel',meetingID);
   
   try {
-    const response = await fetch(`http://localhost:4000/meetings/${meetingID}`, {
+    const response = await fetch(`https://crmsystem-y80u.onrender.com/meetings/${meetingID}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

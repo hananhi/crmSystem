@@ -36,7 +36,7 @@ export default function Home() {
 
     try {
 
-      const response = await fetch('https://crm3-vj7r.onrender.com/followUps');
+      const response = await fetch('https://crmsystem-y80u.onrender.com/followUps');
       const data = await response.json();
       console.log(data);
 
