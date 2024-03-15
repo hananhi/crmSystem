@@ -12,6 +12,6 @@
   "scripts": {
     "build": "cd Client && npm run build",
     "dev": "npm run build && nodemon ./Server/server.js",
-    "start": "npm run dev && node ./Server/server.js"
+    "start": "npm run build && node ./Server/server.js"
   }
 }
