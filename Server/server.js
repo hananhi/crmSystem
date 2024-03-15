@@ -42,9 +42,18 @@ pool.getConnection((err, connection) => {
 const app = express();
 
 app.use(express.json()); //parsing
+const renderIPs = ['3.75.158.163','3.125.183.140','35.157.117.28']; 
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (renderIPs.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
 
-
-app.use( cors());//middileware for cors
+app.use( cors(corsOptions));//middileware for cors
 
 app.use(errorhandler); //middileware for error
 
