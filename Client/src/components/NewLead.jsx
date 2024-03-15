@@ -1,7 +1,7 @@
 // Import necessary hook from React for state management
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+const PORT = import.meta.env.VITE_REACT_APP_PORT;
 // Define the NewLead component
 export default function NewLead() {
   // State hook for managing lead data as an object
@@ -33,7 +33,7 @@ export default function NewLead() {
 
     try {
       // Attempt to POST the leadData to a server endpoint
-      const response = await fetch('https://crmsystem-y80u.onrender.com/leads', {
+      const response = await fetch(`https://crmsystem-y80u.onrender.com:${PORT}/leads`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -11,6 +11,7 @@ import { FaFilter } from 'react-icons/fa';
 import { IoCloudUploadOutline } from "react-icons/io5";
 
 
+const PORT = import.meta.env.VITE_REACT_APP_PORT
 
 //home component
 export default function Home() {
@@ -36,7 +37,7 @@ export default function Home() {
 
     try {
 
-      const response = await fetch('https://crmsystem-y80u.onrender.com/followUps');
+      const response = await fetch(`https://crmsystem-y80u.onrender.com:${PORT}/followUps`);
       const data = await response.json();
       console.log(data);
 
@@ -53,7 +54,7 @@ export default function Home() {
   const fetchData = async () => {
 
     try {
-      const response = await fetch('https://crm3-vj7r.onrender.com/leads/');
+      const response = await fetch(`https://crm3-vj7r.onrender.com:${PORT}/leads/`);
       const data = await response.json();
       console.log(data);
 

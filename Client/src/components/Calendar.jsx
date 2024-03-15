@@ -4,7 +4,7 @@ import Fullcalendar from"@fullcalendar/react"
  import timeGridPlugin from"@fullcalendar/timegrid"
  import interactionPlugin from"@fullcalendar/interaction"
  import { IoCloseCircle } from "react-icons/io5";
-
+ const PORT = import.meta.env.VITE_REACT_APP_PORT
 export default function Calendar() {
 
     const [events, setEvents] = useState([]);
@@ -14,7 +14,7 @@ export default function Calendar() {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const response = await fetch('https://crmsystem-y80u.onrender.com/meetings');
+      const response = await fetch(`https://crmsystem-y80u.onrender.com:${PORT}/meetings`);
     
       const data = await response.json();
 console.log(data);

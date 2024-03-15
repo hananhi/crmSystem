@@ -9,6 +9,7 @@ import { BsFillMegaphoneFill } from "react-icons/bs";
 import { IoCloseCircle } from "react-icons/io5";
 
 
+const PORT = import.meta.env.VITE_REACT_APP_PORT
 
 export default function LeadInformation() {
 
@@ -48,19 +49,19 @@ useEffect(() => {
       setIsLoading(true); // Assume you have a state to track loading
       try {
         // Fetch lead details
-        const leadResponse = await fetch(`https://crmsystem-y80u.onrender.com/leads/${leadId}`);
+        const leadResponse = await fetch(`https://crmsystem-y80u.onrender.com:${PORT}/leads/${leadId}`);
         const leadData = await leadResponse.json();
         console.log('Lead data:', leadData);
   
    
    setData(leadData);
         // Fetch associated packages
-        const packagesResponse = await fetch(`https://crmsystem-y80u.onrender.com/leads/${leadId}/packages`);
+        const packagesResponse = await fetch(`https://crmsystem-y80u.onrender.com:${PORT}/leads/${leadId}/packages`);
         const packagesData = await packagesResponse.json();
         console.log('Associated Packages:', packagesData);
   
         // Fetch associated action logs
-        const actionLogsResponse = await fetch(`https://crmsystem-y80u.onrender.com/leads/${leadId}/actionlogs`);
+        const actionLogsResponse = await fetch(`https://crmsystem-y80u.onrender.com:${PORT}/leads/${leadId}/actionlogs`);
         const actionLogsData = await actionLogsResponse.json();
         console.log('Associated Action Logs:', actionLogsData);
   
