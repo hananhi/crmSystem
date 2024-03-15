@@ -1,3 +1,98 @@
 {
     
-}
+        "home": {
+          "newButton": "جديد",
+          "numberOfLeads": "عدد العملاء المحتملين",
+          "calendarButton": "التقويم",
+          "searchPlaceholder": "البحث بواسطة اسم العميل...",
+          "uploadFileButton": "تحميل ملف",
+          "opportunitiesTab": "الفرص",
+          "followUpsTab": "المتابعات",
+          "reminderMessage": "تذكير، لديك اجتماع في غضون 10 دقائق مع",
+          "noUpcomingMeeting": "لا يوجد لديك اجتماعات قادمة.",
+          "leadName": "اسم العميل المحتمل",
+          "customerAccount": "حساب العميل",
+          "email": "البريد الإلكتروني",
+          "phoneNumber": "رقم الهاتف",
+          "status": "الحالة",
+          "allStatus": "الكل",
+          "newStatus": "جديد",
+          "quoteGivenStatus": "تم تقديم عرض",
+          "advancePaidStatus": "تم دفع عربون",
+          "fullAmountPaidStatus": "تم دفع المبلغ كاملاً",
+          "saleLossStatus": "خسارة البيع",
+          "scheduledTime": "الوقت المحدد",
+          "followUpType": "نوع المتابعة",
+          "updatedAt": "تاريخ التحديث",
+          "customerName": "اسم العميل"
+        },
+        "header": {
+            "crmSystem": "نظام إدارة العملاء",
+            "userName": "اسم المستخدم"
+          },
+          "calendar": {
+            "updateMeeting": "تحديث الاجتماع",
+            "changeTime": "تغيير الوقت",
+            "cancelMeeting": "إلغاء الاجتماع"
+          },
+          "details": {
+            "opportunityName": "اسم الفرصة",
+            "newMeeting": "اجتماع جديد",
+            "followUp": "متابعة",
+            "creationDate": "تاريخ الإنشاء",
+            "lastModified": "آخر تعديل",
+            "status": "الحالة",
+            "addNewMeeting": "إضافة اجتماع جديد",
+            "meetingTitle": "عنوان الاجتماع",
+            "durationInMinutes": "المدة بالدقائق",
+            "setManually": "تحديد يدويا",
+            "submit": "إرسال",
+            "packages": "الحزم",
+            "addActionLog": "إضافة سجل نشاط جديد",
+            "saveActionLog": "حفظ سجل النشاط",
+            "actionLogs": "سجلات النشاط",
+            "actionId": "معرف النشاط",
+            "actionDate": "تاريخ النشاط",
+            "note": "ملاحظة",
+            "edit": "تحرير",
+            "delete": "حذف",
+            "addNewPackage": "إضافة حزمة جديدة",
+            "savePackage": "حفظ الحزمة",
+            "packageId": "معرف الحزمة",
+            "packageName": "اسم الحزمة",
+            "description": "الوصف",
+            "price": "السعر",
+            "actions": "الإجراءات"
+          },
+          "forms": {
+            "followUpAfter1Hour": "بعد ساعة",
+            "followUpAfter2Hours": "بعد ساعتين",
+            "followUpTomorrow": "غدا",
+            "setManually":  "تحديد يدويا",
+            "dateTime": "التاريخ والوقت"
+          },
+          "general": {
+            "loading": "جار التحميل..."
+          },
+          "newLead":{
+            "createNewLead": "إنشاء عميل جديد",
+            "leadName": "اسم العميل",
+            "customerAccount": "حساب العميل",
+            "phoneNumber": "رقم الهاتف",
+            "email": "البريد الإلكتروني",
+            "creationDate": "تاريخ الإنشاء",
+            "paymentDate": "تاريخ الدفع",
+            "status": "الحالة",
+            "options": {
+              "new": "جديد",
+              "quote_given": "تم إعطاء العرض",
+              "advance_paid": "تم دفع السلف",
+              "full_amount_paid": "تم دفع المبلغ الكامل",
+              "sale_loss": "فقدان البيع"
+            }},
+            "submitButton": {
+              "submitting": "جارٍ إضافة العميل الجديد...",
+              "create": "إنشاء"
+            }
+          }
+          

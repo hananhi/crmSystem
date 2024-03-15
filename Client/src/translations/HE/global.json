@@ -1,3 +1,103 @@
 {
-    
-}
+    "home": {
+      "newButton": "חדש",
+      "numberOfLeads": "מספר הלידים",
+      "calendarButton": "לוח שנה",
+      "searchPlaceholder": "חיפוש לפי שם הלקוח...",
+      "uploadFileButton": "העלאת קובץ",
+      "opportunitiesTab": "הזדמנויות",
+      "followUpsTab": "מעקבים",
+      "reminderMessage": "תזכורת, יש לך פגישה בעוד 10 דקות עם",
+      "noUpcomingMeeting": "אין לך פגישות קרובות.",
+      "leadName": "שם הליד",
+      "customerAccount": "חשבון לקוח",
+      "email": "דוא\"ל",
+      "phoneNumber": "מספר טלפון",
+      "status": "סטטוס",
+      "allStatus": "הכל",
+      "newStatus": "חדש",
+      "quoteGivenStatus": "הצעת מחיר ניתנה",
+      "advancePaidStatus": "תשלום מראש בוצע",
+      "fullAmountPaidStatus": "הסכום המלא שולם",
+      "saleLossStatus": "הפסד מכירות",
+      "scheduledTime": "זמן מתוזמן",
+      "followUpType": "סוג המעקב",
+      "updatedAt": "עודכן ב",
+      "customerName": "שם הלקוח"
+    },
+    "header": {
+        "crmSystem": "מערכת ניהול לקוחות",
+        "userName": "שם משתמש"
+      },
+      "calendar": {
+        "updateMeeting": "עדכן פגישה",
+        "changeTime": "שנה זמן",
+        "cancelMeeting": "בטל פגישה"
+      },
+  
+        "details": {
+          "opportunityName": "שם ההזדמנות",
+          "newMeeting": "פגישה חדשה",
+          "followUp": "מעקב",
+          "creationDate": "תאריך יצירה",
+          "lastModified": "עדכון אחרון",
+          "status": "סטטוס",
+          "addNewMeeting": "הוסף פגישה חדשה",
+          "meetingTitle": "כותרת הפגישה",
+          "durationInMinutes": "משך זמן בדקות",
+          "setManually": "הגדרה ידנית",
+          "submit": "שלח",
+          "packages": "חבילות",
+          "addActionLog": "הוסף רישום פעולה חדש",
+          "saveActionLog": "שמור רישום פעולה",
+          "actionLogs": "יומני פעולות",
+          "actionId": "מזהה פעולה",
+          "actionDate": "תאריך פעולה",
+          "note": "הערה",
+          "edit": "ערוך",
+          "delete": "מחק",
+          "addNewPackage": "הוסף חבילה חדשה",
+          "savePackage": "שמור חבילה",
+          "packageId": "מזהה חבילה",
+          "packageName": "שם החבילה",
+          "description": "תיאור",
+          "price": "מחיר",
+          "actions": "פעולות"
+        },
+        "forms": {
+          "followUpAfter1Hour": "אחרי שעה",
+          "followUpAfter2Hours": "אחרי שתי שעות",
+          "followUpTomorrow": "מחר",
+          "setManually": "לקבוע ידני",
+          "dateTime": "תאריך ושעה"
+        },
+        "general": {
+          "loading": "טוען..."
+        },
+        "newLead": {
+          "createNewLead": "יצירת ליד חדש",
+          "leadName": "שם הליד",
+          "customerAccount": "חשבון לקוח",
+          "phoneNumber": "מספר טלפון",
+          "email": "אימייל",
+          "creationDate": "תאריך יצירה",
+          "paymentDate": "תאריך תשלום",
+          "status": "סטטוס",
+
+          "options": {
+            "new": "חדש",
+            "quote_given": "ציטוט ניתן",
+            "advance_paid": "תשלום מראש",
+            "full_amount_paid": "תשלום מלא",
+            "sale_loss": "אובדן מכירה"
+          }
+        },
+          "submitButton": {
+            "submitting": "מוסיף ליד חדש...",
+            "create": "יצירה"
+          }
+      
+      
+  }
+
+  

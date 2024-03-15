@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useTransition } from 'react'
 import Header from './Header'
 import { FaPlus } from "react-icons/fa";
 import { GoPin } from "react-icons/go";
@@ -9,6 +9,9 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit2 } from "react-icons/fi";
 import { FaFilter } from 'react-icons/fa';
 import { IoCloudUploadOutline } from "react-icons/io5";
+import { useTranslation } from 'react-i18next';
+
+
 
 
 
@@ -23,6 +26,8 @@ export default function Home() {
   const navigate = useNavigate();
 
   const [sortDirection, setSortDirection] = useState(false);
+
+  const [t,i18n]=useTranslation('global')
  
 
 
@@ -248,239 +253,197 @@ export default function Home() {
       <div className='md:flex items-center space-x-2 p-2 rounded-lg justify-evenly w-full'>
         <button className="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-teal-200 ml-2" onClick={newLeadPage}>
           <FaPlus color="#2f855a" size="20px" />
-          <div className="text-teal-800 font-bold">New</div>
+          <div className="text-teal-800 font-bold">{t('home.newButton')}</div>
         </button>
 
         <div className='text-teal-800 font-bold '>
-          <div >Number of Leads <span className='bg-teal-800 text-white px-2 rounded-md'>{numberOfLeads}</span></div>
+          <div >{t('home.numberOfLeads')} <span className='bg-teal-800 text-white px-2 rounded-md'>{numberOfLeads}</span></div>
         </div>
 
-        <div className='text-teal-800 font-bold space-x-2 p-2 rounded-lg cursor-pointer hover:bg-teal-200 ml-2' onClick={toCalendar}>Calendar</div>
+        <div className='text-teal-800 font-bold space-x-2 p-2 rounded-lg cursor-pointer hover:bg-teal-200 ml-2' onClick={toCalendar}>{t('home.calendarButton')}</div>
 
-        <div class="flex-grow flex md:max-w-xs lg:max-w-sm xl:max-w-md">
-          <input type="text" id="searchInput" placeholder="Search by customer name..." onChange={(e) => setSearch(e.target.value)}
-            class="flex-1 p-2 rounded border-2 border-teal-800 focus:outline-none focus:ring-1 focus:ring-teal-500 w-[400px]" />
+        <div className="flex-grow flex md:max-w-xs lg:max-w-sm xl:max-w-md">
+      <input type="text" id="searchInput" placeholder={t('home.searchPlaceholder')} onChange={(e) => setSearch(e.target.value)}
+        className="flex-1 p-2 rounded border-2 border-teal-800 focus:outline-none focus:ring-1 focus:ring-teal-500 w-[400px]" />
+    </div>
+    <div>
+      <label htmlFor="file-upload" className="flex justify-evenly items-center p-1 border-2 border-teal-800 font-bold rounded-md shadow-sm bg-white cursor-pointer hover:border-teal-400">
+        <IoCloudUploadOutline size={'20px'} style={{ color: 'teal' }} />
+        <span className="text-center text-teal-800 ml-1">{t('home.uploadFileButton')}</span>
+        <input id="file-upload" type="file" accept=".xlsx, .xls" className="hidden" onChange={(e) => handleFileUpload(e)} />
+      </label>
+    </div>
+  </div>
 
-        </div>
-        <div >
-    <label for="file-upload" class="flex justify-evenly items-center p-1 border-2 border-teal-800 font-bold rounded-md shadow-sm bg-white cursor-pointer hover:border-teal-400">
-    <IoCloudUploadOutline size={'20px'} style={{ color: 'teal' }} />
-        <span class="text-center text-teal-800 ml-1">Upload a file</span>
-        <input id="file-upload" type="file" accept=".xlsx, .xls" class="hidden" onChange={(e) => handleFileUpload(e)} />
-    </label>
-</div>
-      </div>
+  <div className='w-full'>
+    <div className="min-h-screen py-6 flex flex-col justify-center sm:py-12">
+      <div className="relative py-3 sm:mx-auto min-h-screen min-w-[1050px]">
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-green-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-lg"></div>
+        <div className="relative min-h-screen px-4 py-10 bg-white shadow-lg sm:rounded-lg sm:p-20">
 
-      <div className='w-full  '>
-        <div className="min-h-screen py-6 flex flex-col justify-center sm:py-12 ">
+          <div className="max-w-[300px] ml-[700px] min-w-[300px]">
+            <ul className="text-sm font-medium text-center rounded-lg shadow flex">
+              <li className="w-full">
+                <button onClick={() => setActiveTab('opportunities')} className={`inline-block w-full p-3 rounded-l-lg ${activeTab === 'opportunities' ? 'text-white bg-gradient-to-r from-green-500 to-teal-500' : 'text-teal-500 hover:text-white hover:bg-teal-500'}`}>
+                  {t('home.opportunitiesTab')}
+                </button>
+              </li>
+              <li className="w-full">
+                <button onClick={() => setActiveTab('followUps')} className={`inline-block w-full p-3 rounded-r-lg ${activeTab === 'followUps' ? 'text-white bg-gradient-to-r from-green-500 to-teal-500' : 'text-teal-500 hover:text-white hover:bg-teal-500'}`}>
+                  {t('home.followUpsTab')}
+                </button>
+              </li>
+            </ul>
+          </div>
 
-          <div className="relative py-3 sm:mx-auto min-h-screen min-w-[1050px]">
-            <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-green-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-lg"></div>
-            <div className="relative min-h-screen px-4 py-10 bg-white shadow-lg sm:rounded-lg sm:p-20">
-
-            <div className="max-w-[300px]  ml-[700px] min-w-[300px]">
-  <ul className="text-sm font-medium text-center rounded-lg shadow flex">
-    <li className="w-full">
-      <button
-        onClick={() => setActiveTab('opportunities')}
-        className={`inline-block w-full p-3 rounded-l-lg ${activeTab === 'opportunities' ? 'text-white bg-gradient-to-r from-green-500 to-teal-500' : 'text-teal-500 hover:text-white hover:bg-teal-500'}`}
-      >
-         Opportunities
-      </button>
-    </li>
-    <li className="w-full">
-      <button
-        onClick={() => setActiveTab('followUps')}
-        className={`inline-block w-full p-3 rounded-r-lg ${activeTab === 'followUps' ? 'text-white bg-gradient-to-r from-green-500 to-teal-500' : 'text-teal-500 hover:text-white hover:bg-teal-500'}`}
-      >
-        Follow Ups
-      </button>
-    </li>
-  </ul>
-</div>
-
-              <div className="flex justify-between items-center mb-8">
-
-                <div className="flex space-x-4">
-                  <GoPin size="30px" color="#2f855a" />
-                  <h1 className="text-teal-800 font-bold text-4xl }">{title}</h1>
-                </div>
-                <div className="w-full max-w-md">
-                  <marquee behavior="scroll" direction="left" className="block text-red-700">
-                    {upcoming.length > 0 ? `Reminder, you have a meeting in 10 min with ${upcoming[0].customer_account}` : "You don't have an upcoming meeting."}
-                  </marquee>
-                </div>
-              </div>
-
-              {activeTab === 'opportunities' && (
-                <div>
-
-                  <div className="overflow-x-auto " style={{ maxHeight: '500px', overflowY: 'auto' }}>
-                    <table className="w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Lead Name</th>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Customer Account</th>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email</th>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Phone Number</th>
-                          <th className=" relative px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"> Status <FaFilter  className="inline cursor-pointer ml-8" onClick={()=>setSortDirection(!sortDirection)} />
-                          
-                    { sortDirection && <div className='absolute mt-3 bg-teal-100 p-1 rounded-md min-h-40'>
-
-                    <div className="flex items-center mb-4">
-        <input id="radio-1" name="filterStatus" type="radio" value="All" onClick={()=>handleFilter('All')}/>
-        <label htmlFor="radio-1" className="ml-2 normal-case ">All</label>
-      </div>
-                      
-                      <div className="flex items-center mb-4">
-        <input id="radio-1" name="filterStatus" type="radio" value="new" onClick={()=>handleFilter('new')}/>
-        <label htmlFor="radio-1" className="ml-2 normal-case ">New</label>
-      </div>
-      
-      <div class="flex items-center mb-4">
-        <input id="radio-2" name="filterStatus" type="radio" value="Quote Given" onClick={()=>handleFilter('Quote Given')} />
-        <label htmlFor="radio-3" className="ml-2 normal-case ">Quote Given</label>
-      </div>
-      
-      <div class="flex items-center mb-4">
-        <input id="radio-3" name="filterStatus" type="radio" value="advanced paid" onClick={()=>handleFilter('advance Paid')} />
-        <label htmlFor="radio-3" className="ml-2 normal-case">Advanced Paid</label>
-      </div>
-      
-      <div class="flex items-center mb-4">
-        <input id="radio-4" name="filterStatus" type="radio" value="Full Amount Paid" onClick={()=>handleFilter('Full Amount Paid')} />
-        <label htmlFor="radio-4" class="ml-2 normal-case ">Full Amount Paid</label>
-      </div>
-
-      <div class="flex items-center mb-4">
-        <input id="radio-4" name="filterStatus" type="radio" value="saleloss" onClick={()=>handleFilter('sale loss')} />
-        <label htmlFor="radio-4" class="ml-2 normal-case ">Sale loss</label>
-      </div>
-
-      
-                      </div>
-}
-                          </th>
-                        </tr>
-                      
-                     
-                      </thead>
-                      <tbody className="bg-white divide-y divide-gray-200 min-h-[500px]">
-                        {leadsArray.map((lead) => (
-                          <tr key={lead.id} className="hover:bg-teal-50 cursor-pointer" onClick={() => handleRowClick(lead.id)}>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{lead.name}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.customer_account}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.email}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.phone}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-
-                              <select className="form-select block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
-                                onClick={(e) => e.stopPropagation()}
-                                onChange={(e) => handleStatusChange(e, lead.id)}>
-
-                                <option value="new" selected={lead.status === 'new'}>New</option>
-                                <option value="quote_given" selected={lead.status === 'quote given'}>Quote Given</option>
-                                <option value="advance_paid" selected={lead.status === 'advance paid'}>Advance Paid</option>
-                                <option value="full_amount_paid" selected={lead.status === 'full amount paid'}>Full Amount Paid</option>
-                                <option value="sale_loss" selected={lead.status === 'sale loss'}>Sale Loss</option>
-                              </select>
-                            </td>
-
-
-                            <td className="py-4 px-6">
-              <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg  text-grey rounded shadow hover:shadow-lg transition duration-150 ease-in-out"
-              >
-                <FiEdit2 />
-              </button>
-
-            </td>
-                 <td className="py-4 px-6">
-              <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-red-600 hover:bg-red-700 text-white rounded shadow hover:shadow-lg transition duration-150 ease-in-out" 
-              onClick={(e) => {
-                e.stopPropagation(); // Stop the event from propagating first
-                deleteLead(lead.id); // Then call your deleteLead function with the lead id
-              }}
-              >
-                <RiDeleteBin6Line size="16px" />
-              </button>
-
-            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+          <div className="flex justify-between items-center mb-8">
+            <div className="flex space-x-4">
+              <GoPin size="30px" color="#2f855a" />
+              <h1 className="text-teal-800 font-bold text-4xl">{title}</h1>
+            </div>
+            <div className="w-full max-w-md">
+              <marquee behavior="scroll" direction="left" className="block text-red-700">
+                {upcoming.length > 0 ? `${t('home.reminderMessage')} ${upcoming[0].customer_account}` : t('home.noUpcomingMeeting')}
+              </marquee>
+            </div>
+          </div>
+          {activeTab === 'opportunities' && (
+  <div>
+    <div className="overflow-x-auto" style={{ maxHeight: '500px', overflowY: 'auto' }}>
+      <table className="w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
+          <tr>
+            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{t('home.leadName')}</th>
+            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{t('home.customerAccount')}</th>
+            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{t('home.email')}</th>
+            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{t('home.phoneNumber')}</th>
+            <th className="relative px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              {t('home.status')} <FaFilter className="inline cursor-pointer ml-8" onClick={() => setSortDirection(!sortDirection)} />
+              {sortDirection && (
+                <div className='absolute mt-3 bg-teal-100 p-1 rounded-md min-h-40'>
+                  <div className="flex items-center mb-4">
+                    <input id="radio-1" name="filterStatus" type="radio" value="All" onClick={() => handleFilter('All')}/>
+                    <label htmlFor="radio-1" className="ml-2 normal-case ">{t('home.allStatus')}</label>
                   </div>
-
-                </div>
-              )}
-
-
-              {/* Content based on active sheet */}
-              {activeTab === 'followUps' && (
-                <div>
-
-                  <div>
-                    <table className='sm:mx-auto w-full divide-y divide-gray-200' >
-                      <thead className="bg-gray-50">
-                        <tr>
-
-                          <th scope="col" className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
-                            Scheduled Time
-                          </th>
-                          <th scope="col" className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
-                            FollowUp Type
-                          </th>
-                          <th scope="col" className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
-                            Updated At
-                          </th>
-                          <th scope="col" className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
-                            Customer Name
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="bg-white">
-                        {followUps.map((followUp) => (
-                          
-                          <tr key={followUp.id} className="hover:bg-teal-100">
-                             <td className="px-5 py-5 border-b border-gray-200 text-sm">
-                              {followUp.customer_name}
-                            </td>
-
-                            <td className="px-5 py-5 border-b border-gray-200 text-sm text-gray-500">
-                              {followUp.scheduled_time}
-                            </td>
-                            <td className="px-5 py-5 border-b border-gray-200 text-sm text-gray-500">
-                              {followUp.follow_up_type}
-                            </td>
-
-                            <td className="px-5 py-5 border-b border-gray-200 text-sm text-gray-500">
-                              {followUp.updated_at}
-                            </td>
-
-                            <td className="py-4 px-6">
-              <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg  text-grey rounded shadow hover:shadow-lg transition duration-150 ease-in-out"
-              >
-                <FiEdit2 />
-              </button>
-
-            </td>
-                            <td className="py-4 px-6">
-              <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-red-600 hover:bg-red-700 text-white rounded shadow hover:shadow-lg transition duration-150 ease-in-out"
-              >
-                <RiDeleteBin6Line size="16px" />
-              </button>
-
-              
-            </td>
-
-                           
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  <div className="flex items-center mb-4">
+                    <input id="radio-1" name="filterStatus" type="radio" value="new" onClick={() => handleFilter('new')}/>
+                    <label htmlFor="radio-1" className="ml-2 normal-case ">{t('home.newStatus')}</label>
+                  </div>
+                  <div className="flex items-center mb-4">
+                    <input id="radio-2" name="filterStatus" type="radio" value="Quote Given" onClick={() => handleFilter('Quote Given')} />
+                    <label htmlFor="radio-3" className="ml-2 normal-case ">{t('home.quoteGivenStatus')}</label>
+                  </div>
+                  <div className="flex items-center mb-4">
+                    <input id="radio-3" name="filterStatus" type="radio" value="advanced paid" onClick={() => handleFilter('advance Paid')} />
+                    <label htmlFor="radio-3" className="ml-2 normal-case">{t('home.advancePaidStatus')}</label>
+                  </div>
+                  <div className="flex items-center mb-4">
+                    <input id="radio-4" name="filterStatus" type="radio" value="Full Amount Paid" onClick={() => handleFilter('Full Amount Paid')} />
+                    <label htmlFor="radio-4" className="ml-2 normal-case ">{t('home.fullAmountPaidStatus')}</label>
+                  </div>
+                  <div className="flex items-center mb-4">
+                    <input id="radio-4" name="filterStatus" type="radio" value="saleloss" onClick={() => handleFilter('sale loss')} />
+                    <label htmlFor="radio-4" className="ml-2 normal-case ">{t('home.saleLossStatus')}</label>
                   </div>
                 </div>
               )}
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200 min-h-[500px]">
+          {leadsArray.map((lead) => (
+            <tr key={lead.id} className="hover:bg-teal-50 cursor-pointer" onClick={() => handleRowClick(lead.id)}>
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{lead.name}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.customer_account}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.email}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.phone}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <select className="form-select block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={(e) => handleStatusChange(e, lead.id)}>
+                  <option value="new" selected={lead.status === 'new'}>{t('home.newStatus')}</option>
+                  <option value="quote_given" selected={lead.status === 'quote given'}>{t('home.quoteGivenStatus')}</option>
+                  <option value="advance_paid" selected={lead.status === 'advance paid'}>{t('home.advancePaidStatus')}</option>
+                  <option value="full_amount_paid" selected={lead.status === 'full amount paid'}>{t('home.fullAmountPaidStatus')}</option>
+                  <option value="sale_loss" selected={lead.status === 'sale loss'}>{t('home.saleLossStatus')}</option>
+                </select>
+              </td>
+              <td className="py-4 px-6">
+                <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg text-grey rounded shadow hover:shadow-lg transition duration-150 ease-in-out">
+                  <FiEdit2 />
+                </button>
+              </td>
+              <td className="py-4 px-6">
+                <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-red-600 hover:bg-red-700 text-white rounded shadow hover:shadow-lg transition duration-150 ease-in-out" 
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent row click action
+                  deleteLead(lead.id);
+                }}>
+                  <RiDeleteBin6Line size="16px" />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+)}
+
+
+{activeTab === 'followUps' && (
+  <div>
+    <div>
+      <table className='sm:mx-auto w-full divide-y divide-gray-200'>
+        <thead className="bg-gray-50">
+          <tr>
+            <th scope="col" className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+              {t('home.scheduledTime')}
+            </th>
+            <th scope="col" className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+              {t('home.followUpType')}
+            </th>
+            <th scope="col" className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+              {t('home.updatedAt')}
+            </th>
+            <th scope="col" className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+              {t('home.customerName')}
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white">
+          {followUps.map((followUp) => (
+            <tr key={followUp.id} className="hover:bg-teal-100">
+              <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                {followUp.scheduled_time}
+              </td>
+              <td className="px-5 py-5 border-b border-gray-200 text-sm text-gray-500">
+                {followUp.follow_up_type}
+              </td>
+              <td className="px-5 py-5 border-b border-gray-200 text-sm text-gray-500">
+                {followUp.updated_at}
+              </td>
+              <td className="px-5 py-5 border-b border-gray-200 text-sm text-gray-500">
+                {followUp.customer_name}
+              </td>
+              <td className="py-4 px-6">
+                <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg text-grey rounded shadow hover:shadow-lg transition duration-150 ease-in-out">
+                  <FiEdit2 />
+                </button>
+              </td>
+              <td className="py-4 px-6">
+                <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-red-600 hover:bg-red-700 text-white rounded shadow hover:shadow-lg transition duration-150 ease-in-out">
+                  <RiDeleteBin6Line size="16px" />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+)}
+
 
 
             </div>

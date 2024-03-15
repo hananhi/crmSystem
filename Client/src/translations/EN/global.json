@@ -1,3 +1,100 @@
 {
     
-}
+        "home": {
+          "newButton": "New",
+          "numberOfLeads": "Number of Leads",
+          "calendarButton": "Calendar",
+          "searchPlaceholder": "Search by customer name...",
+          "uploadFileButton": "Upload a file",
+          "opportunitiesTab": "Opportunities",
+          "followUpsTab": "Follow Ups",
+          "reminderMessage": "Reminder, you have a meeting in 10 min with",
+          "noUpcomingMeeting": "You don't have an upcoming meeting.",
+          "leadName": "Lead Name",
+          "customerAccount": "Customer Account",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "status": "Status",
+          "allStatus": "All",
+          "newStatus": "New",
+          "quoteGivenStatus": "Quote Given",
+          "advancePaidStatus": "Advance Paid",
+          "fullAmountPaidStatus": "Full Amount Paid",
+          "saleLossStatus": "Sale Loss",
+          "scheduledTime": "Scheduled Time",
+          "followUpType": "FollowUp Type",
+          "updatedAt": "Updated At",
+          "customerName": "Customer Name"
+        },
+        "header": {
+            "crmSystem": "CRM System",
+            "userName": "UserName"
+          },
+          "calendar": {
+            "updateMeeting": "Update Meeting",
+            "changeTime": "change time",
+            "cancelMeeting": "Cancel Meeting"
+          },
+            "details": {
+              "opportunityName": "Opportunity Name",
+              "newMeeting": "New Meeting",
+              "followUp": "Follow Up",
+              "creationDate": "Creation Date",
+              "lastModified": "Last Modified",
+              "status": "Status",
+              "addNewMeeting": "Add New Meeting",
+              "meetingTitle": "Meeting Title",
+              "durationInMinutes": "Duration in Minutes",
+              "setManually": "Set Manually",
+              "submit": "Submit",
+              "packages": "Packages",
+              "addActionLog": "Add New Action Log",
+              "saveActionLog": "Save Action Log",
+              "actionLogs": "Action Logs",
+              "actionId": "Action ID",
+              "actionDate": "Action Date",
+              "note": "Note",
+              "edit": "Edit",
+              "delete": "Delete",
+              "addNewPackage": "Add New Package",
+              "savePackage": "Save Package",
+              "packageId": "Package ID",
+              "packageName": "Package Name",
+              "description": "Description",
+              "price": "Price",
+              "actions": "Actions"
+            },
+            "forms": {
+              "followUpAfter1Hour": "After 1 hour",
+              "followUpAfter2Hours": "After 2 hours",
+              "followUpTomorrow": "Tomorrow",
+              "setManually": "Set Manually",
+              "dateTime": "Date & Time"
+            },
+            "general": {
+              "loading": "Loading..."
+            },
+            "newLead": {
+              "createNewLead": "Create New Lead",
+              "leadName": "Lead Name",
+              "customerAccount": "Customer Account",
+              "phoneNumber": "Phone Number",
+              "email": "Email",
+              "creationDate": "Creation Date",
+              "paymentDate": "Payment Date",
+              "status": "Status",
+              "options": {
+                "new": "New",
+                "quote_given": "Quote Given",
+                "advance_paid": "Advance Paid",
+                "full_amount_paid": "Full Amount Paid",
+                "sale_loss": "Sale Loss"
+              }
+            },
+              "submitButton": {
+                "submitting": "Adding new Lead...",
+                "create": "Create"
+              }
+            }
+            
+    

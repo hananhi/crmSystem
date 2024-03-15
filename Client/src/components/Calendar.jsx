@@ -5,12 +5,17 @@ import Fullcalendar from"@fullcalendar/react"
  import interactionPlugin from"@fullcalendar/interaction"
  import { IoCloseCircle } from "react-icons/io5";
 
+ import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
+
 export default function Calendar() {
 
     const [events, setEvents] = useState([]);
     const [updateMeeting, setUpdateMeeting]=useState(false);
     const [meetingID,setMeetingId]=useState();
     
+
+    const [t,i18n]=useTranslation('global')
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -101,26 +106,20 @@ async function cancelMeeting() {
         eventContent={renderEventContent}
         eventClick={handleEventClick}
     />
-
-   { updateMeeting && <div>
-
-    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50 ">
-
-<form className="bg-white rounded-lg p-8 m-4 max-w-lg w-full space-y-4 relative">
-
-<IoCloseCircle  color='red' className='absolute top-0 right-0 mt-4 mr-4 cursor-pointer size-6' onClick={() => 
-    setUpdateMeeting(false)}/>
-  <div className="text-lg font-semibold text-center text-teal-500">Update Meeting </div> 
-<div className='flex justify-evenly'>
-
-<button className='text-teal-500 border border-teal-500 rounded-md font-bold p-1' onClick={changetime}>change time </button>
-<button type='button' className='border border-red-600 rounded-md text-red-600 font-bold p-1' onClick={cancelMeeting}>Cancel Meeting</button>
-</div>
-</form>
+{updateMeeting && (
+        <div>
+          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <form className="bg-white rounded-lg p-8 m-4 max-w-lg w-full space-y-4 relative">
+              <IoCloseCircle color='red' className='absolute top-0 right-0 mt-4 mr-4 cursor-pointer size-6' onClick={() => setUpdateMeeting(false)}/>
+              <div className="text-lg font-semibold text-center text-teal-500">{t('calendar.updateMeeting')}</div>
+              <div className='flex justify-evenly'>
+                <button className='text-teal-500 border border-teal-500 rounded-md font-bold p-1' onClick={changetime}>{t('calendar.changeTime')}</button>
+                <button type='button' className='border border-red-600 rounded-md text-red-600 font-bold p-1' onClick={cancelMeeting}>{t('calendar.cancelMeeting')}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
-
-     </div>
+  );
 }
-</div>
-)
-   }

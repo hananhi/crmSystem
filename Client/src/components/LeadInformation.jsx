@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import { BsFillMegaphoneFill } from "react-icons/bs";
 import { IoCloseCircle } from "react-icons/io5";
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -30,6 +31,8 @@ export default function LeadInformation() {
   const [startDateTime, setStartDateTime] = useState('');
 const [duration, setDuration] = useState('');
 const [endDateTime, setEndDateTime] = useState('');
+
+const [t,i18n]=useTranslation('global')
 
 const id=state.leadId;
 
@@ -426,138 +429,112 @@ useEffect(() => {
   
   return (
     <div>
-      <Header />
-{Data.length > 0 ? (
-  
-  <div>
-  <div className='flex justify-between mt-6 ml-6'>
-    <div className='w-[50%] text-teal-500 font-bold text-2xl'>
-      {/* Display Opportunity Name */}
-      <div>Opportunity Name: {Data[0].name}</div>
-    </div>
-    <div className='flex flex-col items-center justify-center border-2 border-teal-500 px-3 py-2 mb-8 rounded' onClick={() => setShowForm(true)}>
-  <FaVideo className='text-teal-500 text-3xl' /> 
-  <div className=' text-teal-500 '>New Meeting</div>
-
-</div>
-
-<div className='flex flex-col items-center justify-center border-2 border-teal-500 px-3 py-2 mb-8 rounded' onClick={() => setShowFormFollow(true)}>
-  <BsFillMegaphoneFill  className='text-teal-500 text-3xl' /> 
-  <div className=' text-teal-500 '>Follow Up</div>
-  </div>
-
-  {showFormFollow && (
-  <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50 ">
-
-    <form className="bg-white rounded-lg p-8 m-4 max-w-lg w-full space-y-4 relative" onSubmit={handleSubmitFollow}>
-    <IoCloseCircle  color='red' className='absolute top-0 right-0 mt-4 mr-4 cursor-pointer size-6' onClick={() => {
-    setShowFormFollow(false);
-    setManualTime(false);
-  }}/>
-      <div className="text-lg font-semibold text-center">FollowUp</div> 
-      <div class="flex items-center mb-4">
-        <input id="radio-1" name="followUpTime" type="radio" value="1hour" class="w-4 h-4 text-teal-600 bg-gray-100 rounded border-gray-300 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-        <label htmlFor="radio-1" class="ml-2 text-sm font-medium">after 1 hour</label>
-      </div>
-      
-      <div class="flex items-center mb-4">
-        <input id="radio-2" name="followUpTime" type="radio" value="2hours" class="w-4 h-4 text-teal-600 bg-gray-100 rounded border-gray-300 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-        <label htmlFor="radio-2" class="ml-2 text-sm font-medium">after 2 hours</label>
-      </div>
-      
-      <div class="flex items-center mb-4">
-        <input id="radio-3" name="followUpTime" type="radio" value="tomorrow" class="w-4 h-4 text-teal-600 bg-gray-100 rounded border-gray-300 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-        <label htmlFor="radio-3" class="ml-2 text-sm font-medium">Tomorrow</label>
-      </div>
-      
-      <div class="flex items-center mb-4">
-        <input id="radio-4" name="followUpTime" type="radio" value="manual" class="w-4 h-4 text-teal-600 bg-gray-100 rounded border-gray-300 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onClick={() => setManualTime(true)} />
-        <label htmlFor="radio-4" class="ml-2 text-sm font-medium">Set up manually</label>
-      </div>
-
-      {showManualTime &&  <div>
-        <label htmlFor="DateTime" className="block text-sm font-medium text-gray-700"> Date & Time:</label>
-        <input type="datetime-local" name="DateTime" required 
-               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
-               value={startDateTime}
-               onChange={(e) => setStartDateTime(e.target.value)}/>
-      </div>}
-
-      <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
-        Submit
-      </button>
-    </form>
-  </div>
-
-)}
-
-{showForm && (
-  
-  <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
-   
-    <form className="bg-white rounded-lg p-8 m-4 max-w-lg w-full space-y-4 relative" onSubmit={handleSubmit}>
-    <IoCloseCircle  color='red' className='absolute top-0 right-0 mt-4 mr-4 cursor-pointer size-6' onClick={()=>setShowForm(false)}/>
-      <div className="text-lg font-semibold text-center">Add New Meeting</div>
-      
+    <Header />
+    {Data.length > 0 ? (
       <div>
-        <label htmlFor="title" className="block text-sm font-medium text-gray-700">Meeting Title</label>
-        <input type="text" name="title" placeholder="Meeting Title" required 
-               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500"/>
-      </div>
-      
-      
-      <input type="datetime-local" name="startDateTime" required 
-       className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
-       value={startDateTime}
-       onChange={(e) => setStartDateTime(e.target.value)}/>
+        <div className='flex justify-between mt-6 ml-6'>
+          <div className='w-[50%] text-teal-500 font-bold text-2xl'>
+            <div>{t('details.opportunityName')}: {Data[0].name}</div>
+          </div>
+          <div className='flex flex-col items-center justify-center border-2 border-teal-500 px-3 py-2 mb-8 rounded' onClick={() => setShowForm(true)}>
+            <FaVideo className='text-teal-500 text-3xl' />
+            <div className='text-teal-500'>{t('details.newMeeting')}</div>
+          </div>
 
-<input type="number" name="duration" placeholder="Duration in minutes" 
-       className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500"
-       value={duration}
-       onChange={(e) => setDuration(e.target.value)}/>
+          <div className='flex flex-col items-center justify-center border-2 border-teal-500 px-3 py-2 mb-8 rounded' onClick={() => setShowFormFollow(true)}>
+            <BsFillMegaphoneFill className='text-teal-500 text-3xl' />
+            <div className='text-teal-500'>{t('details.followUp')}</div>
+          </div>
 
-<input type="datetime-local" name="endDateTime" required 
-       className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
-       value={endDateTime}
-       readOnly/> 
+          {showFormFollow && (
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50 ">
+              <form className="bg-white rounded-lg p-8 m-4 max-w-lg w-full space-y-4 relative" onSubmit={handleSubmitFollow}>
+                <IoCloseCircle color='red' className='absolute top-0 right-0 mt-4 mr-4 cursor-pointer size-6' onClick={() => {
+                  setShowFormFollow(false);
+                  setManualTime(false);
+                }}/>
+                <div className="text-lg font-semibold text-center">{t('details.followUp')}</div> 
+                <div className="flex items-center mb-4">
+                  <input id="radio-1" name="followUpTime" type="radio" value="1hour" className="w-4 h-4 text-teal-600 bg-gray-100 rounded border-gray-300 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                  <label htmlFor="radio-1" className="ml-2 text-sm font-medium">{t('forms.followUpAfter1Hour')}</label>
+                </div>
+                
+                <div className="flex items-center mb-4">
+                  <input id="radio-2" name="followUpTime" type="radio" value="2hours" className="w-4 h-4 text-teal-600 bg-gray-100 rounded border-gray-300 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                  <label htmlFor="radio-2" className="ml-2 text-sm font-medium">{t('forms.followUpAfter2Hours')}</label>
+                </div>
+                
+                <div className="flex items-center mb-4">
+                  <input id="radio-3" name="followUpTime" type="radio" value="tomorrow" className="w-4 h-4 text-teal-600 bg-gray-100 rounded border-gray-300 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                  <label htmlFor="radio-3" className="ml-2 text-sm font-medium">{t('forms.followUpTomorrow')}</label>
+                </div>
+                
+                <div className="flex items-center mb-4">
+                  <input id="radio-4" name="followUpTime" type="radio" value="manual" className="w-4 h-4 text-teal-600 bg-gray-100 rounded border-gray-300 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onClick={() => setManualTime(true)} />
+                  <label htmlFor="radio-4" className="ml-2 text-sm font-medium">{t('forms.setManually')}</label>
+                </div>
 
-      
-      <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
-        Submit
-      </button>
-    </form>
-  </div>
-)}
+                {showManualTime && <div>
+                  <label htmlFor="DateTime" className="block text-sm font-medium text-gray-700">{t('forms.dateTime')}:</label>
+                  <input type="datetime-local" name="DateTime" required className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500" value={startDateTime} onChange={(e) => setStartDateTime(e.target.value)}/>
+                </div>}
 
+                <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                  {t('details.submit')}
+                </button>
+              </form>
+            </div>
+          )}
 
-    <div className='flex justify-evenly w-[30%] text-teal-500 text-center'>
-      {/* Display Creation Date */}
-      <div className='border-r-2 p-3'>
-        <div>Creation Date</div>
-        <div>{new Date(Data[0].creation_date).toLocaleDateString()}</div>
-      </div>
+          {showForm && (
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <form className="bg-white rounded-lg p-8 m-4 max-w-lg w-full space-y-4 relative" onSubmit={handleSubmit}>
+                <IoCloseCircle color='red' className='absolute top-0 right-0 mt-4 mr-4 cursor-pointer size-6' onClick={() => setShowForm(false)}/>
+                <div className="text-lg font-semibold text-center">{t('details.addNewMeeting')}</div>
+                
+                <div>
+                  <label htmlFor="title" className="block text-sm font-medium text-gray-700">{t('details.meetingTitle')}</label>
+                  <input type="text" name="title" placeholder={t('details.meetingTitle')} required className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500"/>
+                </div>
+                
+                <input type="datetime-local" name="startDateTime" required className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500" value={startDateTime} onChange={(e) => setStartDateTime(e.target.value)}/>
 
-      {/* Display Last Modified Date */}
-      <div className='border-r-2 p-3'>
-        <div>Last Modified</div>
-        <div>{new Date(Data[0].last_modified).toLocaleDateString()}</div>
-      </div>
+                <input type="number" name="duration" placeholder={t('details.durationInMinutes')} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500" value={duration} onChange={(e) => setDuration(e.target.value)}/>
 
-      {/* Display Status */}
-      <div className='p-3'>
-        <div>Status</div>
-        <div>{Data[0].status}</div> {/* Assuming Status is static. If dynamic, use {Data.status} */}
+                <input type="datetime-local" name="endDateTime" required className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500" value={endDateTime} readOnly/>
+
+                <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                  {t('details.submit')}
+                </button>
+              </form>
+            </div>
+          )}
+
+          <div className='flex justify-evenly w-[30%] text-teal-500 text-center'>
+            <div className='border-r-2 p-3'>
+              <div>{t('details.creationDate')}</div>
+              <div>{new Date(Data[0].creation_date).toLocaleDateString()}</div>
+            </div>
+
+            <div className='border-r-2 p-3'>
+              <div>{t('details.lastModified')}</div>
+              <div>{new Date(Data[0].last_modified).toLocaleDateString()}</div>
+            </div>
+
+            <div className='p-3'>
+              <div>{t('details.status')}</div>
+              <div>{Data[0].status}</div>
       </div>
     </div>
   </div>
 </div>
 ) : (
-<div>Loading...</div>
+<div>{t('general.loading')}</div>
 )}
 
 <div className="p-6 bg-gradient-to-br  from-green-50 to-teal-100 shadow-xl rounded-xl">
   <div className="mb-6 text-teal-800 font-bold text-2xl flex justify-between items-center">
-    <span>Packages</span>
+    <span>{t('details.packages')}</span>
    
   </div>
 
@@ -565,12 +542,12 @@ useEffect(() => {
     <table className="w-full text-sm text-left text-gray-700 bg-white rounded-lg overflow-hidden">
       <thead className="text-xs text-gray-700 uppercase bg-teal-300">
         <tr>
-          <th className="py-3 px-6">Package ID</th>
-          <th className="py-3 px-6">Package Name</th>
-          <th className="py-3 px-6">Description</th>
-          <th className="py-3 px-6">Price</th>
-          <th className="py-3 px-6">Actions</th>
-          <th className="py-3 px-6">Delete</th>
+          <th className="py-3 px-6">{t('details.packageId')}</th>
+          <th className="py-3 px-6">{t('details.packageName')}</th>
+          <th className="py-3 px-6">{t('details.description')}</th>
+          <th className="py-3 px-6">{t('details.price')}</th>
+          <th className="py-3 px-6">{t('details.actions')}</th>
+          <th className="py-3 px-6">{t('details.delete')}</th>
         </tr>
       </thead>
       <tbody className="divide-y divide-gray-200">
@@ -618,7 +595,7 @@ useEffect(() => {
                   onClick={handleSaveClick}
                   className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-green-600 hover:bg-green-700 text-white rounded shadow hover:shadow-lg transition duration-150 ease-in-out"
                 >
-                  Save
+                  {t('details.save')}
                 </button>
               ) : (
                 <button
@@ -649,14 +626,14 @@ useEffect(() => {
         onClick={() => setAddPackage(true)}
         className="btn bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-150 ease-in-out transform hover:-translate-y-1 shadow"
       >
-        Add New Package
+        {t('details.addNewPackage')}
       </button>
     ) : (
       <button
         onClick={handleAddPackage}
         className="btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-150 ease-in-out transform hover:-translate-y-1 shadow"
       >
-        Save Package
+        {t('details.savePackage')}
       </button>
     )}
     </div>
@@ -665,17 +642,17 @@ useEffect(() => {
 
 
   <div className="p-6 bg-gradient-to-br bg-teal-100 shadow-xl rounded-xl">
-  <div className="mb-6 text-teal-800 font-bold text-2xl">Action Logs</div>
+  <div className="mb-6 text-teal-800 font-bold text-2xl">{t('details.actionLogs')}</div>
 
   <div className="overflow-x-auto rounded-lg">
     <table className="w-full text-sm text-left text-gray-700 bg-white rounded-lg overflow-hidden">
       <thead className="text-xs text-gray-700 uppercase bg-teal-300">
         <tr>
-          <th className="py-3 px-6">Action ID</th>
-          <th className="py-3 px-6">Action Date</th>
-          <th className="py-3 px-6">Note</th>
-          <th className="py-3 px-6">Edit</th>
-          <th className="py-3 px-6">Delete</th>
+          <th className="py-3 px-6">{t('details.actionId')}</th>
+          <th className="py-3 px-6">{t('details.actionDate')}</th>
+          <th className="py-3 px-6">{t('details.note')}</th>
+          <th className="py-3 px-6">{t('details.edit')}</th>
+          <th className="py-3 px-6">{t('details.delete')}</th>
         </tr>
       </thead>
       <tbody className="divide-y divide-gray-200">
@@ -711,7 +688,7 @@ useEffect(() => {
                   onClick={handleSaveEdit}
                   className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-green-600 hover:bg-green-700 text-white rounded shadow hover:shadow-lg transition duration-150 ease-in-out"
                 >
-                  Save
+                  {t('details.save')}
                 </button>
               ) : (
                 <button
@@ -742,14 +719,14 @@ useEffect(() => {
         onClick={() => setAddActivityLog(true)}
         className="btn bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-150 ease-in-out transform hover:-translate-y-1 shadow"
       >
-        Add New Activity Log
+        {t('details.addActionLog')}
       </button>
     ) : (
       <button
         onClick={handleAddActivityLog}
         className="btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-150 ease-in-out transform hover:-translate-y-1 shadow"
       >
-        Save Activity Log
+        {t('details.saveActionLog')}
       </button>
     )}
   </div>
