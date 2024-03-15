@@ -12,8 +12,8 @@
   },
   "scripts": {
     "dev": "./node_modules/.bin/concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd Server && npm install && npm start",
-    "client": "cd Client && npm install && npm run dev",
+    "server": "cd Server && npm start",
+    "client": "cd Client && npm run dev",
     "build": "cd Client && npm install && npm run build",
     "start": "npm run dev"
   }
