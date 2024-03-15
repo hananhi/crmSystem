@@ -87,7 +87,7 @@ useEffect(() => {
   async function deletePackage(id) {
 
     try {
-      const response = await fetch(`https://crm3-vj7r.onrender.com/leads/${state.leadId}/packages/${id}`, {
+      const response = await fetch(`https://crmsystem-y80u.onrender.com:${PORT}/leads/${state.leadId}/packages/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ useEffect(() => {
 //delete function for the selected action
   async function deleteAction(id) {
     try {
-      const response = await fetch(`https://crm3-vj7r.onrender.com/leads/${state.leadId}/actionlogs/${id}`, {
+      const response = await fetch(`https://crmsystem-y80u.onrender.com:${PORT}/leads/${state.leadId}/actionlogs/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ useEffect(() => {
   
 
       // Make a POST request to the server to add the package
-      const response = await fetch(`https://crm3-vj7r.onrender.com/leads/${state.leadId}/packages`, {
+      const response = await fetch(`https://crmsystem-y80u.onrender.com:${PORT}/leads/${state.leadId}/packages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -194,7 +194,7 @@ useEffect(() => {
 
 
       // Make a POST request to the server to add the action 
-      const response = await fetch(`https://crm3-vj7r.onrender.com/leads/${state.leadId}/actionlogs`, {
+      const response = await fetch(`https://crmsystem-y80u.onrender.com:${PORT}/leads/${state.leadId}/actionlogs`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -257,7 +257,7 @@ useEffect(() => {
   const handleSaveClick = async () => {
     try {
       // Make an API call to update the data on the server
-      const response = await fetch(`https://crm3-vj7r.onrender.com/leads/${state.leadId}/packages/${editingId}`, {
+      const response = await fetch(`https://crmsystem-y80u.onrender.com:${PORT}/leads/${state.leadId}/packages/${editingId}`, {
         method: 'PATCH', // Assuming you use a PUT request for updating
         headers: {
           'Content-Type': 'application/json',
@@ -311,7 +311,7 @@ useEffect(() => {
   const handleSaveEdit = async () => {
     try {
       // Make an API call to update the data on the server
-      const response = await fetch(`https://crm3-vj7r.onrender.com/leads/${state.leadId}/actionlogs/${editingLogId}`, {
+      const response = await fetch(`https://crmsystem-y80u.onrender.com:${PORT}/leads/${state.leadId}/actionlogs/${editingLogId}`, {
         method: 'PATCH', // Assuming you use a PUT request for updating
         headers: {
           'Content-Type': 'application/json',
@@ -359,7 +359,7 @@ useEffect(() => {
    
   
     try {
-      const response = await fetch(`https://crm3-vj7r.onrender.com/meetings`, {
+      const response = await fetch(`https://crmsystem-y80u.onrender.com:${PORT}/meetings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -399,7 +399,7 @@ useEffect(() => {
 
     try {
         // Replace with your actual endpoint URL
-        const response = await fetch('https://crm3-vj7r.onrender.com/followUps', {
+        const response = await fetch(`https://crmsystem-y80u.onrender.com:${PORT}/followUps`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
