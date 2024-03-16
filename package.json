@@ -14,7 +14,7 @@
   "scripts": {
     "start:client": "cd Client && npm start",
     "start:server": "cd Server && node server.js", 
-    "start": "concurrently \"npm run start:client\" \"npm run start:server\"",
-    "build": "npm run build:client && npm run build:server"
+    "start": "concurrently \"npm run start:Client\" \"npm run start:server\"",
+    "build": "npm run build:Client && npm run build:server"
   }
 }
