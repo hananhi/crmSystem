@@ -14,7 +14,7 @@
     "start:client": "cd Client && npm start",
     "build:client": "cd Client && npm install && npm run build",
     "start:server": "cd Server && node server.js",
-    "start": "concurrently \"npm run start:client\" \"npm run start:server\"",
+    "start": "npm run start:client && sleep 5 && npm run start:server",
     "build": "npm run build:client"
   },
   "devDependencies": {
