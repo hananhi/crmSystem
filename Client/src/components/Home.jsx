@@ -25,7 +25,17 @@ export default function Home() {
 
   const [sortDirection, setSortDirection] = useState(false);
 
-  const [t,i18n]=useTranslation('global')
+  const [t,i18n]=useTranslation('global');
+
+  
+  const [editedLeadName, setEditedLeadName] = useState("");
+  const [editedCustomerName,seteditedCustomerName] = useState("");
+  const [editedEmail, setEditedEmail] = useState("");
+  const [editedPhone, setEditedPhone] = useState("");
+  const [editingId, setEditingId] = useState(null);
+
+  const [editMode, setEditMode] = useState(false);
+  
  
 
   
@@ -103,7 +113,12 @@ export default function Home() {
   //go to lead information regarding to the lead(row) that user click in 
   const handleRowClick = async (leadId) => {
 
+    if(editMode==false){
     navigate('LeadInformation', { state: { leadId } })
+    }
+    else{
+
+    }
   };
 
   function toCalendar() {
@@ -134,7 +149,7 @@ export default function Home() {
     const newStatus = e.target.value;
 
     try {
-      const response = await fetch(`https://crm3-vj7r.onrender.com/leads/${leadId}/${newStatus}`, {
+      const response = await fetch(`http://localhost:4000/leads/${leadId}/${newStatus}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -216,7 +231,7 @@ export default function Home() {
 
     console.log(leadId);
     try {
-      const response = await fetch(`http://localhost:4000/leads/${leadId}`, {
+      const response = await fetch(`https://crm3-vj7r.onrender.com/leads/${leadId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -248,9 +263,63 @@ export default function Home() {
         let filterArray = filteredarray.filter(lead => lead.status.toLowerCase() == filterValue.toLowerCase());
         console.log(filterArray);
         setarray(filterArray);
+        setLeadsArray(leadsArray);
       }
   
         }
+
+
+        const handleEditClick = (e,id, name,customer_account ,email, phone) => {
+
+          setEditMode(true)
+;
+          setEditingId(id);
+          setEditedLeadName(name);
+          seteditedCustomerName(customer_account);
+          setEditedEmail(email);
+          setEditedPhone(phone);
+          
+        };
+      
+
+
+        
+  const handleSaveClick = async (id) => {
+    try {
+      // Make an API call to update the data on the server
+      const response = await fetch(`http://localhost:4000/leads/${id}`, {
+        method: 'PATCH', // Assuming you use a PUT request for updating
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: editedLeadName,
+          email: editedEmail,
+          phone: editedPhone,
+          customer_account:editedCustomerName
+        }),
+      });
+
+      if (response.ok) {
+        // Update the local state or trigger a data refetch
+        // Reset the editing state
+        setEditingId(null);
+        setEditedLeadName('');
+        seteditedCustomerName('');
+        setEditedPhone('');
+        setEditedEmail('');
+
+        window.location.reload();
+        console.log('Changes saved successfully!');
+      } else {
+        console.error('Failed to save changes.');
+      }
+
+    } catch (error) {
+      console.error('Error saving changes:', error);
+    }
+  };
+
       
 
   return (
@@ -359,25 +428,74 @@ export default function Home() {
         <tbody className="bg-white divide-y divide-gray-200 min-h-[500px]">
           {filteredarray.map((lead) => (
             <tr key={lead.id} className="hover:bg-teal-50 cursor-pointer" onClick={() => handleRowClick(lead.id)}>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{lead.name}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.customer_account}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.email}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.phone}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">  {editingId === lead.id ? (
+                <input
+                  type="text"
+                  value={editedLeadName}
+                  onChange={(e) => setEditedLeadName(e.target.value)}
+                  className="input input-bordered w-full rounded"
+                />
+              ) : (
+                lead.name
+              )}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">  {editingId === lead.id ? (
+                <input
+                  type="text"
+                  value={editedCustomerName}
+                  onChange={(e) => seteditedCustomerName(e.target.value)}
+                  className="input input-bordered w-full rounded"
+                />
+              ) : (
+                lead.customer_account
+              )}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">  {editingId === lead.id ? (
+                <input
+                  type="text"
+                  value={editedEmail}
+                  onChange={(e) => setEditedEmail(e.target.value)}
+                  className="input input-bordered w-full rounded"
+                />
+              ) : (
+                lead.email
+              )}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">  {editingId === lead.id ? (
+                <input
+                  type="text"
+                  value={editedPhone}
+                  onChange={(e) => setEditedPhone(e.target.value)}
+                  className="input input-bordered w-full rounded"
+                />
+              ) : (
+                lead.phone
+              )}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 <select className="form-select block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
                   onClick={(e) => e.stopPropagation()}
                   onChange={(e) => handleStatusChange(e, lead.id)}>
                   <option value="new" selected={lead.status === 'new'}>{t('home.newStatus')}</option>
-                  <option value="quote_given" selected={lead.status === 'quote given'}>{t('home.quoteGivenStatus')}</option>
-                  <option value="advance_paid" selected={lead.status === 'advance paid'}>{t('home.advancePaidStatus')}</option>
-                  <option value="full_amount_paid" selected={lead.status === 'full amount paid'}>{t('home.fullAmountPaidStatus')}</option>
-                  <option value="sale_loss" selected={lead.status === 'sale loss'}>{t('home.saleLossStatus')}</option>
+                  <option value="quote given" selected={lead.status === 'quote given'}>{t('home.quoteGivenStatus')}</option>
+                  <option value="advance paid" selected={lead.status === 'advance paid'}>{t('home.advancePaidStatus')}</option>
+                  <option value="full amount paid" selected={lead.status === 'full amount paid'}>{t('home.fullAmountPaidStatus')}</option>
+                  <option value="sale loss" selected={lead.status === 'sale loss'}>{t('home.saleLossStatus')}</option>
                 </select>
               </td>
               <td className="py-4 px-6">
-                <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg text-grey rounded shadow hover:shadow-lg transition duration-150 ease-in-out">
-                  <FiEdit2 />
+              {editingId === lead.id ? (
+                <button
+                  onClick={()=>handleSaveClick(lead.id)}
+                  className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-green-600 hover:bg-green-700 text-white rounded shadow hover:shadow-lg transition duration-150 ease-in-out"
+                >
+                  {t('details.save')}
                 </button>
+              ) : (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent row click action
+                   handleEditClick(e,lead.id, lead.name, lead.customer_account,lead.email, lead.phone)}}
+                  className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg rounded shadow hover:shadow-lg transition duration-150 ease-in-out" >
+                  <FiEdit2 size="16px" />
+                </button>
+              )}
               </td>
               <td className="py-4 px-6">
                 <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-red-600 hover:bg-red-700 text-white rounded shadow hover:shadow-lg transition duration-150 ease-in-out" 

@@ -32,12 +32,7 @@ export default function LeadInformation() {
 const [duration, setDuration] = useState('');
 const [endDateTime, setEndDateTime] = useState('');
 
-/*
-const [editedCustomerName, seteditedCustomerName] = useState('');
-const [editedPhone, setEditedPhone] = useState('');
-const [editedEmail, setEditedEmail] = useState('');
-const [editedLeadName, setEditedLeadName] = useState('');
-*/
+
 const [t,i18n]=useTranslation('global')
 
 const id=state.leadId;
