@@ -8,10 +8,6 @@
     "qrcode-terminal": "^0.12.0",
     "twilio": "^4.21.0",
     "whatsapp-web.js": "^1.23.0"
-  },
-  "scripts": {
-    "build": "cd Client && npm install && npm run build",
-    "dev": "npm run build && nodemon server.js",
-    "start": "npm run build && node ./Server/server.js"
   }
+  
 }

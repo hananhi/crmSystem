@@ -66,7 +66,7 @@ async function cancelMeeting() {
   console.log('iam in cancel',meetingID);
   
   try {
-    const response = await fetch(`http://localhost:4000/meetings/${meetingID}`, {
+    const response = await fetch(`https://crm3-vj7r.onrender.com/meetings/${meetingID}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

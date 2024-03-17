@@ -12,9 +12,6 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 import { useTranslation } from 'react-i18next';
 
 
-
-
-
 //home component
 export default function Home() {
 
@@ -24,18 +21,26 @@ export default function Home() {
   const [numberOfLeads, setNumberOfLeads] = useState();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
+  const[filteredarray,setarray]=useState(leadsArray);
 
   const [sortDirection, setSortDirection] = useState(false);
 
   const [t,i18n]=useTranslation('global')
  
 
+  
 
   //use effect to perform fetch to call the leads 
   useEffect(() => {
     fetchData();
     fetchFollowUps();
+    
   }, [])
+
+  useEffect(() => {
+    // Set initial value for filtered array when leadsArray changes
+    setarray(leadsArray);
+  }, [leadsArray]);
 
   const fetchFollowUps = async () => {
 
@@ -48,6 +53,7 @@ export default function Home() {
       setFollowUps(data);
       //const upcomingFollows=data.filter(follow=> current data (start time )<follow.scheduled_time < current time )
 
+     
     }
     catch (error) {
 
@@ -230,20 +236,20 @@ export default function Home() {
     }
   }
 
-    const handleFilter=(filterValue)=>{
 
-      console.log(filterValue);
+    const handleFilter=(filterValue)=>{
+      setarray(leadsArray);
+    
 
       if (filterValue === 'All') {
         setLeadsArray(leadsArray); 
 
       } else {
-       
-        let filterArray = leadsArray.filter(lead => lead.status.toLowerCase() == filterValue.toLowerCase());
+        let filterArray = filteredarray.filter(lead => lead.status.toLowerCase() == filterValue.toLowerCase());
         console.log(filterArray);
-        setLeadsArray(filterArray);
+        setarray(filterArray);
       }
-      
+  
         }
       
 
@@ -351,7 +357,7 @@ export default function Home() {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200 min-h-[500px]">
-          {leadsArray.map((lead) => (
+          {filteredarray.map((lead) => (
             <tr key={lead.id} className="hover:bg-teal-50 cursor-pointer" onClick={() => handleRowClick(lead.id)}>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{lead.name}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{lead.customer_account}</td>
