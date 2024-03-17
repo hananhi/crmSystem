@@ -1,3 +1,2 @@
-2024/02/20-11:44:32.113 8ef4 Reusing MANIFEST C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\Service Worker\Database/MANIFEST-000001
-2024/02/20-11:44:32.113 8ef4 Recovering log #3
-2024/02/20-11:44:32.115 8ef4 Reusing old log C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\Service Worker\Database/000003.log 
+2024/03/17-02:30:29.325 7664 Creating DB C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\Service Worker\Database since it was missing.
+2024/03/17-02:30:29.339 7664 Reusing MANIFEST C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\Service Worker\Database/MANIFEST-000001

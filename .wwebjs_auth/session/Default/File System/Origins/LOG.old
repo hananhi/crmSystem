@@ -1,3 +1,5 @@
-2024/02/20-11:38:30.842 7d18 Reusing MANIFEST C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\File System\Origins/MANIFEST-000001
-2024/02/20-11:38:30.843 7d18 Recovering log #3
-2024/02/20-11:38:30.844 7d18 Reusing old log C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\File System\Origins/000003.log 
+2024/03/17-02:30:29.484 7664 Log #3: 3 ops saved to Table #4 OK
+2024/03/17-02:30:29.485 7664 Archiving C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\File System\Origins/000003.log: OK
+2024/03/17-02:30:29.486 7664 Table #4: 3 entries OK
+2024/03/17-02:30:29.487 7664 Archiving C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\File System\Origins/MANIFEST-000001: OK
+2024/03/17-02:30:29.505 7664 **** Repaired leveldb C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\File System\Origins; recovered 1 files; 181 bytes. Some data may have been lost. ****

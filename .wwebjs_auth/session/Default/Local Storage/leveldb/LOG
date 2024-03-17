@@ -1,3 +1,2 @@
-2024/02/20-11:44:32.111 8dd4 Reusing MANIFEST C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
-2024/02/20-11:44:32.112 8dd4 Recovering log #23
-2024/02/20-11:44:32.112 8dd4 Reusing old log C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\Local Storage\leveldb/000023.log 
+2024/03/17-02:30:26.760 6dcc Creating DB C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\Local Storage\leveldb since it was missing.
+2024/03/17-02:30:26.776 6dcc Reusing MANIFEST C:\Users\hanan\crmSystem\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001

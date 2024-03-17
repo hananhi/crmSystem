@@ -8,7 +8,7 @@ import customerRoutes from './routes/customerRoutes.js'
 import meetingsRoutes from './routes/meetingsRoutes.js'
 import followRoutes from './routes/followRoutes.js'
 import excelRoutes from './routes/excelRoutes.js'
-//import { scheduleReminders } from './controllers/meetingController.js';
+//import { scheduleReminders ,scheduleCheckAfterQuateGiven } from './controllers/meetingController.js';
 //import whatsappClient from './controllers/whatsAppclientController.js';
 
 
@@ -65,6 +65,7 @@ app.listen(PORT, () => {
 whatsappClient.on('ready', () => {
   console.log('Client is ready, scheduling reminders.');
   scheduleReminders(); // Ensure this is only called once the client is ready
+  scheduleCheckAfterQuateGiven();
 });
 */
 

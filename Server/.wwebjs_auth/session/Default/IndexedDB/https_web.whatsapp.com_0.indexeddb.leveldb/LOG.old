@@ -1,0 +1,15 @@
+2024/03/17-02:35:19.595 6824 Reusing MANIFEST C:\Users\hanan\crmSystem\Server\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/03/17-02:35:19.595 6824 Recovering log #312
+2024/03/17-02:35:19.596 6824 Reusing old log C:\Users\hanan\crmSystem\Server\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000312.log 
+2024/03/17-02:35:19.596 6824 Delete type=2 #311
+2024/03/17-02:35:19.596 6824 Delete type=2 #315
+2024/03/17-02:35:19.604 2e90 Level-0 table #317: started
+2024/03/17-02:35:19.604 2e90 Level-0 table #317: 0 bytes OK
+2024/03/17-02:35:19.607 2e90 Delete type=0 #312
+2024/03/17-02:35:19.608 2e90 Manual compaction at level-0 from '\x00[\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/03/17-02:35:19.608 2e90 Manual compaction at level-1 from '\x00[\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\\x00\x00\x00' @ 0 : 0; will stop at '\x00j\x00\x00\xc8\x11\x00w\x00o\x00r\x00k\x00e\x00r\x00_\x00w\x00a\x00m\x00_\x00e\x00v\x00e\x00n\x00t\x00s' @ 22979 : 1
+2024/03/17-02:35:19.608 2e90 Compacting 1@1 + 1@2 files
+2024/03/17-02:35:19.615 2e90 Generated table #318@1: 341 keys, 4675 bytes
+2024/03/17-02:35:19.615 2e90 Compacted 1@1 + 1@2 files => 4675 bytes
+2024/03/17-02:35:19.618 2e90 compacted to: files[ 0 0 1 0 0 0 0 ]
+2024/03/17-02:35:19.618 2e90 Manual compaction at level-1 from '\x00j\x00\x00\xc8\x11\x00w\x00o\x00r\x00k\x00e\x00r\x00_\x00w\x00a\x00m\x00_\x00e\x00v\x00e\x00n\x00t\x00s' @ 22979 : 1 .. '\x00\\x00\x00\x00' @ 0 : 0; will stop at (end)

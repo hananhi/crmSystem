@@ -4,7 +4,10 @@ import whatsappClient from './whatsAppclientController.js';
 
 
 export const scheduleReminders = () => {
-  const query = `SELECT * FROM leads WHERE meeting_datetime < NOW() + INTERVAL 2 HOUR + INTERVAL 15 MINUTE AND send_reminder = 0;`;
+  const query = `SELECT *
+  FROM leads
+  WHERE meeting_datetime BETWEEN NOW() AND NOW() + INTERVAL 10 MINUTE;
+   AND send_reminder = 0;`;
 
   pool.query(query, (error, results) => {
     if (error) {
@@ -43,6 +46,43 @@ export const scheduleReminders = () => {
           }
       
       })
+    })
+        .catch(err => console.error('Sending message failed:', err));
+      });
+    });
+  });
+};
+
+
+export const scheduleCheckAfterQuateGiven = () => {
+  const query = `SELECT * FROM leads WHERE status = 'quote given';`;
+
+  pool.query(query, (error, results) => {
+    if (error) {
+      console.error('Error fetching meetings:', error);
+      return;
+    }
+
+    console.log(results);
+
+    results.forEach(lead => {
+      const currentDate = new Date();
+      const reminderTime = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
+
+      nodeSchedule.scheduleJob(reminderTime, () => {
+      
+          // Check if the number starts with '0' and replace it with '972'
+  const numberWithCountryCode = lead.phone.startsWith('0') ? '972' + lead.phone.substring(1) : lead.phone;
+  
+  // Append '@c.us' to make it compatible with WhatsApp
+  const toNumber= numberWithCountryCode + '@c.us';
+  console.log(toNumber);
+    whatsappClient.sendMessage(toNumber, 'Hello from Hanan , there is anything i can help after quato given , please answer Yes or No')
+        .then(response => {console.log('Message sent:', response.id);
+      
+        console.log('Message sent:', response.id);
+
+     
     })
         .catch(err => console.error('Sending message failed:', err));
       });
