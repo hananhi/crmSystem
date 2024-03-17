@@ -216,7 +216,7 @@ export default function Home() {
 
     console.log(leadId);
     try {
-      const response = await fetch(`http://localhost:4000/leads/${leadId}`, {
+      const response = await fetch(`https://crm3-vj7r.onrender.com/leads/${leadId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
