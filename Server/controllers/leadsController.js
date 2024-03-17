@@ -92,7 +92,7 @@ export const updateLead = (req, res, next) => {
 console.log(id,status);
 
         // Use pool.query for executing the query
-        pool.query('UPDATE leads SET status = ? WHERE id = ?', [ status ,id], (error, results) => {
+        pool.query(`UPDATE leads SET status = ? WHERE id = ?;`, [ status ,id], (error, results) => {
 
             if (error) {
                 console.error('Error in getLead:', error);
@@ -152,4 +152,49 @@ export const getLeads = (req, res, next) => {
         console.error('Error in getLeads:', error);
         next(error);
     }
+
+}
+
+    
+export const updateLeadInfo= async(req,res,next)=>{
+
+    const leadId = req.params.id;
+    
+    console.log(leadId);
+   
+
+    try {
+        // Assuming you have the updated package details in req.body
+        const { name ,email, phone,customer_account } = req.body;
+        console.log(name ,email, phone ,customer_account);
+    
+        // Perform a database update query based on the received data
+        // Update the table and columns according to your database structure
+
+    
+        // Use pool.query to execute the update query
+        pool.query(
+          `
+          UPDATE leads
+          SET name = ?, customer_account = ?, email = ?,phone= ?
+          WHERE id = ?;
+        `,
+          [name, customer_account, email, phone, leadId],
+          (error, results, fields) => {
+            if (error) {
+              console.error('Error updating package:', error);
+              next(error);
+              return;
+            }
+    
+            // Handle the success case
+    
+            res.status(200).json({ message: 'lead updated successfully' });
+          }
+        );
+        
+      } catch (error) {
+        console.error('Error updating package:', error);
+        next(error);
+      }
 };

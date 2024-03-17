@@ -1,5 +1,5 @@
 import express from 'express'
-import { getLeads,addLead ,getLead ,updateLead , deleteLead} from '../controllers/leadsController.js';
+import { getLeads,addLead ,getLead ,updateLead , deleteLead , updateLeadInfo} from '../controllers/leadsController.js';
 import { deletePackage ,editPackage,addPackage,getPackages } from '../controllers/packageController.js';
 import { getActionLogs,deleteAction,editAction ,addActionLog} from '../controllers/actionController.js';
 
@@ -11,7 +11,8 @@ router.get('/',getLeads);
 router.post('/',addLead);
 router.get('/:id',getLead);
 router.delete('/:id', deleteLead);
-router.post('/:id/',updateLead);
+router.post('/:id/:status',updateLead);
+router.patch('/:id',updateLeadInfo);
 
 router.get('/:id/packages',getPackages);
 
