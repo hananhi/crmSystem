@@ -2,19 +2,28 @@ import React from 'react'
 import { GrLanguage } from "react-icons/gr";
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { BiLogOut } from "react-icons/bi";
+import { useNavigate } from 'react-router-dom'; 
 //header component - design 
 export default function Header() {
 
-  const [t,i18n]=useTranslation('global')
+  const [t,i18n]=useTranslation('global');
+  const navigate = useNavigate();
 
     const changeLanguage = (lng) => {
       i18next.changeLanguage(lng);
     };
     
+    const logOut=()=>{
+     navigate('/');
+    }
+
   return (
     <div className="bg-teal-500 p-[1%] flex flex-row justify-between">
-    <div className='text-white font-bold mt-1 text-3xl'>{t('header.crmSystem')}</div>
-    
+      <div className='flex '>
+      <BiLogOut color='white' size={'30px'} className='mt-2' onClick={logOut}/>
+    <div className='text-white font-bold mt-1 text-3xl ml-2'>{t('header.crmSystem')}</div>
+    </div>
     <div className="flex">
       <div className='mr-4 text-white mt-2'>{t('header.userName')}</div>
       <img className="h-10 w-10 object-cover rounded-full" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1361&q=80" alt="Current profile photo" />

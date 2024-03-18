@@ -27,8 +27,6 @@ function App() {
           <Route path='Home/NewLead' element={<NewLead />}/>
           <Route path='Home/Calendar' element={<Calendar />}/>
           
-        
-          
         </Routes>
         </BrowserRouter>
      </div>
