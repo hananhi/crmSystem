@@ -56,7 +56,7 @@ export default function Login() {
 
   // Function to navigate to the Sign Up page
   const goToSignUp = () => {
-    navigate('SignUp');
+    navigate('/SignUp');
   };
 
   // The component renders a form for the user to log in
