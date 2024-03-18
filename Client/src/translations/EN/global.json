@@ -62,7 +62,8 @@
               "packageName": "Package Name",
               "description": "Description",
               "price": "Price",
-              "actions": "Actions"
+              "actions": "Actions",
+              "save": "save"
             },
             "forms": {
               "followUpAfter1Hour": "After 1 hour",

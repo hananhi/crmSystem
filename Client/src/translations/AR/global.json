@@ -62,7 +62,8 @@
             "packageName": "اسم الحزمة",
             "description": "الوصف",
             "price": "السعر",
-            "actions": "الإجراءات"
+            "actions": "الإجراءات",
+            "save": "حفظ"
           },
           "forms": {
             "followUpAfter1Hour": "بعد ساعة",

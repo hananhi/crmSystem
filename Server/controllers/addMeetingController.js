@@ -62,3 +62,27 @@ export const deleteMeetings =async (req,res,next)=>{
   }
 }
 
+export const updateMeeting = (req, res, next) => {
+    try {
+        // Extract leadId from the request parameters
+        const { id } = req.params;
+
+console.log(id);
+
+const{ start , duration ,end }=req.body ;
+
+        // Use pool.query for executing the query
+        pool.query(`UPDATE meeting SET start = ?  duration= ? end= ? WHERE id = ?;`, [ start, duration ,end ,id], (error, results) => {
+
+            if (error) {
+                console.error('Error in getLead:', error);
+                next(error);
+                return;
+            }
+            res.json(results);
+        });
+    } catch (error) {
+        console.error('Error in getLead:', error);
+        next(error);
+    }
+};

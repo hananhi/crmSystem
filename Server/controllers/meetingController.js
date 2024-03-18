@@ -6,7 +6,7 @@ import whatsappClient from './whatsAppclientController.js';
 export const scheduleReminders = () => {
   const query = `SELECT *
   FROM leads
-  WHERE meeting_datetime BETWEEN NOW() AND NOW() + INTERVAL 10 MINUTE;
+  WHERE meeting_datetime BETWEEN NOW() AND NOW() + INTERVAL 10 MINUTE
    AND send_reminder = 0;`;
 
   pool.query(query, (error, results) => {
