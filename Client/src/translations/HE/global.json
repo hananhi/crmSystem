@@ -62,7 +62,8 @@
           "packageName": "שם החבילה",
           "description": "תיאור",
           "price": "מחיר",
-          "actions": "פעולות"
+          "actions": "פעולות",
+          "save": "שמור"
         },
         "forms": {
           "followUpAfter1Hour": "אחרי שעה",
