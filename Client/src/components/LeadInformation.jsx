@@ -432,20 +432,23 @@ useEffect(() => {
     <div>
     <Header />
     {Data.length > 0 ? (
-      <div>
-        <div className='flex justify-between mt-6 ml-6'>
-          <div className='w-[50%] text-teal-500 font-bold text-2xl'>
-            <div>{t('details.opportunityName')}: {Data[0].name}</div>
-          </div>
-          <div className='flex flex-col items-center justify-center border-2 border-teal-500 px-3 py-2 mb-8 rounded' onClick={() => setShowForm(true)}>
-            <FaVideo className='text-teal-500 text-3xl' />
-            <div className='text-teal-500'>{t('details.newMeeting')}</div>
-          </div>
+  <div>
+    <div className='flex flex-col lg:flex-row justify-between mt-6 ml-6'>
+      <div className='lg:w-1/2 text-teal-500 font-bold text-xl lg:text-2xl'>
+        <div>{t('details.opportunityName')}: {Data[0].name}</div>
+      </div>
 
-          <div className='flex flex-col items-center justify-center border-2 border-teal-500 px-3 py-2 mb-8 rounded' onClick={() => setShowFormFollow(true)}>
-            <BsFillMegaphoneFill className='text-teal-500 text-3xl' />
-            <div className='text-teal-500'>{t('details.followUp')}</div>
-          </div>
+      <div className='flex space-x-2 mt-4 lg:mt-0 mb-4'>
+        <div className='flex flex-col items-center justify-center border-2 border-teal-500 px-3 py-2 rounded cursor-pointer' onClick={() => setShowForm(true)}>
+          <FaVideo className='text-teal-500 text-3xl' />
+          <div className='text-teal-500'>{t('details.newMeeting')}</div>
+        </div>
+
+        <div className='flex flex-col items-center justify-center border-2 border-teal-500 px-3 py-2 rounded cursor-pointer' onClick={() => setShowFormFollow(true)}>
+          <BsFillMegaphoneFill className='text-teal-500 text-3xl' />
+          <div className='text-teal-500'>{t('details.followUp')}</div>
+        </div>
+      </div>
 
           {showFormFollow && (
             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50 ">
@@ -511,7 +514,7 @@ useEffect(() => {
             </div>
           )}
 
-          <div className='flex justify-evenly w-[30%] text-teal-500 text-center'>
+          <div className='flex justify-evenly text-teal-500 text-center '>
             <div className='border-r-2 p-3'>
               <div>{t('details.creationDate')}</div>
               <div>{new Date(Data[0].creation_date).toLocaleDateString()}</div>

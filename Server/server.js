@@ -15,7 +15,7 @@ import whatsappClient from './controllers/whatsAppclientController.js';
 dotenv.config();
 //dataBase connection 
 const pool = mysql.createPool({
-    host: '185.229.114.1',
+    host: '141.136.45.136',
     user: 'u636091749_hanan',
     password: ']h!#MH*8dV',
     database: 'u636091749_crm',
