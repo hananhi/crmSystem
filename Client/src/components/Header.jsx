@@ -21,8 +21,8 @@ export default function Header() {
   return (
     <div className="bg-teal-500 p-[1%] flex flex-row justify-between">
       <div className='flex '>
-      <BiLogOut color='white' size={'30px'} className='mt-2' onClick={logOut}/>
-    <div className='text-white font-bold mt-1 text-3xl ml-2'>{t('header.crmSystem')}</div>
+      <BiLogOut color='white' size={'30px'} className='mt-1' onClick={logOut}/>
+    <div className='text-white font-bold mt-1 text-2xl ml-2'>{t('header.crmSystem')}</div>
     </div>
     <div className="flex">
       <div className='mr-4 text-white mt-2'>{t('header.userName')}</div>

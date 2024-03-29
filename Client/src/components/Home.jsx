@@ -352,7 +352,7 @@ export default function Home() {
 
   <div className='w-full'>
     <div className="min-h-screen py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:mx-auto min-h-screen min-w-[1050px]">
+      <div className="relative py-3 sm:mx-auto min-h-screen ">
         <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-green-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-lg"></div>
         <div className="relative min-h-screen px-4 py-10 bg-white shadow-lg sm:rounded-lg sm:p-20">
 
@@ -385,10 +385,10 @@ export default function Home() {
           {activeTab === 'opportunities' && (
   <div>
     <div className="overflow-x-auto" style={{ maxHeight: '500px', overflowY: 'auto' }}>
-      <table className="w-full divide-y divide-gray-200">
+      <table className="  w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{t('home.leadName')}</th>
+            <th className=" px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{t('home.leadName')}</th>
             <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{t('home.customerAccount')}</th>
             <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{t('home.email')}</th>
             <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">{t('home.phoneNumber')}</th>
