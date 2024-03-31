@@ -66,11 +66,11 @@ export default function Login() {
       <div className='w-full h-[400px]'>
     <div className="min-h-screen bg-gray-50 py-3 flex flex-col justify-center sm:py-6">
       
-      <div className="relative py-2 sm:mx-auto ">
+      <div className="relative py-2 w-full sm:w-3/5 md:w-2/5 lg:w-1/3 xl:w-1/4 mx-auto">
         <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-green-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-lg"></div>
       <form className="bg-white rounded-xl drop-shadow-lg space-y-3 py-10 px-4" action="" onSubmit={(e) => handleLogin(e)}>
         <div className="flex justify-center items-center">
-          <img src="https://www.expandable.com/assets/img/crm.png" className="w-60 h-60" alt="TelcoSwitch CRM" />
+          <img src="https://cdn-icons-png.flaticon.com/512/5706/5706401.png" className="w-60 h-60" alt="TelcoSwitch CRM" />
         </div>
         <h1 className="text-center text-3xl text-teal-500 font-bold">Welcome</h1>
         <div className="flex flex-col space-y-1">
@@ -91,7 +91,7 @@ export default function Login() {
             Password
           </label>
           <input
-            className="w-96 px-3 py-2 rounded-md border border-slate-400 "
+            className="w-full px-3 py-2 rounded-md border border-slate-400 "
             type="password"
             placeholder="Your Password"
             name="password"
