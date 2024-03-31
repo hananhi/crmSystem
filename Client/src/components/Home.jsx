@@ -356,7 +356,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-green-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-lg"></div>
         <div className="relative min-h-screen px-4 py-10 bg-white shadow-lg sm:rounded-lg sm:p-20">
 
-          <div className="max-w-[300px] ml-[700px] min-w-[300px]">
+          <div className="max-w-[300px] min-w-[300px] ml-4 sm:ml-10 md:ml-20 lg:ml-52 xl:ml-[700px]">
             <ul className="text-sm font-medium text-center rounded-lg shadow flex">
               <li className="w-full">
                 <button onClick={() => setActiveTab('opportunities')} className={`inline-block w-full p-3 rounded-l-lg ${activeTab === 'opportunities' ? 'text-white bg-gradient-to-r from-green-500 to-teal-500' : 'text-teal-500 hover:text-white hover:bg-teal-500'}`}>
