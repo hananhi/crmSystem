@@ -1,0 +1,9 @@
+resource:
+  kind: Service
+  metadata:
+    identifier: aws-restart
+    title: aws-restart
+    owner: hananhi
+    severity: critical
+    repo_url: https://github.com/hananhi/aws-restart
+    environment: development
